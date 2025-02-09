@@ -10,23 +10,23 @@ uses ctypes;
 type
 
   TColor = record
-    r, g, b, a : byte;
+    R, G, B, A : byte;
   end; 
 
   TRectangle = record
-    x, y, width, height : cfloat;
+    X, Y, Width, Height : cfloat;
   end;
 
   TVector2 = record
-    x, y : cfloat;
+    X, Y : cfloat;
   end;
 
   TVector3 = record
-    x, y, z : cfloat;
+    X, Y, Z : cfloat;
   end;
 
   TVector4 = record
-    x, y, z, w : cfloat;
+    X, Y, Z, W : cfloat;
   end;
 
   TCameraProjection = (
@@ -35,9 +35,9 @@ type
   );
 
   TCamera3D = record
-    position, target, up : TVector3;
-    fovy: cfloat;
-    projection: TCameraProjection;
+    Position, target, Up : TVector3;
+    Fovy: cfloat;
+    Projection: TCameraProjection;
   end;
 
   TCameraMode = (
@@ -49,32 +49,32 @@ type
   );
 
 const
-  LIGHTGRAY: TColor = (r: 200; g: 200; b: 200; a: 255); // Light Gray
-  GRAY:      TColor = (r: 130; g: 130; b: 130; a: 255); // Gray
-  DARKGRAY:  TColor = (r: 80;  g: 80;  b: 80;  a: 255); // Dark Gray
-  YELLOW:    TColor = (r: 253; g: 249; b: 0;   a: 255); // Yellow
-  GOLD:      TColor = (r: 255; g: 203; b: 0;   a: 255); // Gold
-  ORANGE:    TColor = (r: 255; g: 161; b: 0;   a: 255); // Orange
-  PINK:      TColor = (r: 255; g: 109; b: 194; a: 255); // Pink
-  RED:       TColor = (r: 230; g: 41;  b: 55;  a: 255); // Red
-  MAROON:    TColor = (r: 190; g: 33;  b: 55;  a: 255); // Maroon
-  GREEN:     TColor = (r: 0;   g: 228; b: 48;  a: 255); // Green
-  LIME:      TColor = (r: 0;   g: 158; b: 47;  a: 255); // Lime
-  DARKGREEN: TColor = (r: 0;   g: 117; b: 44;  a: 255); // Dark Green
-  SKYBLUE:   TColor = (r: 102; g: 191; b: 255; a: 255); // Sky Blue
-  BLUE:      TColor = (r: 0;   g: 121; b: 241; a: 255); // Blue
-  DARKBLUE:  TColor = (r: 0;   g: 82;  b: 172; a: 255); // Dark Blue
-  PURPLE:    TColor = (r: 200; g: 122; b: 255; a: 255); // Purple
-  VIOLET:    TColor = (r: 135; g: 60;  b: 190; a: 255); // Violet
-  DARKPURPLE:TColor = (r: 112; g: 31;  b: 126; a: 255); // Dark Purple
-  BEIGE:     TColor = (r: 211; g: 176; b: 131; a: 255); // Beige
-  BROWN:     TColor = (r: 127; g: 106; b: 79;  a: 255); // Brown
-  DARKBROWN: TColor = (r: 76;  g: 63;  b: 47;  a: 255); // Dark beown
-  WHITE:     TColor = (r: 255; g: 255; b: 255; a: 255); // White
-  BLACK:     TColor = (r: 0;   g: 0;   b: 0;   a: 255); // Black
-  BLANK:     TColor = (r: 0;   g: 0;   b: 0;   a: 0  ); // Black(Transparent)
-  MAGENTA:   TColor = (r: 255; g: 0;   b: 255; a: 255); // Magenta
-  RAYWHITE:  TColor = (r: 245; g: 245; b: 245; a: 255); // raylib logo
+  LIGHTGRAY: TColor = (R: 200; G: 200; B: 200; A: 255); // Light Gray
+  GRAY:      TColor = (R: 130; G: 130; B: 130; A: 255); // Gray
+  DARKGRAY:  TColor = (R: 80;  G: 80;  B: 80;  A: 255); // Dark Gray
+  YELLOW:    TColor = (R: 253; G: 249; B: 0;   A: 255); // Yellow
+  GOLD:      TColor = (R: 255; G: 203; B: 0;   A: 255); // Gold
+  ORANGE:    TColor = (R: 255; G: 161; B: 0;   A: 255); // Orange
+  PINK:      TColor = (R: 255; G: 109; B: 194; A: 255); // Pink
+  RED:       TColor = (R: 230; G: 41;  B: 55;  A: 255); // Red
+  MAROON:    TColor = (R: 190; G: 33;  B: 55;  A: 255); // Maroon
+  GREEN:     TColor = (R: 0;   G: 228; B: 48;  A: 255); // Green
+  LIME:      TColor = (R: 0;   G: 158; B: 47;  A: 255); // Lime
+  DARKGREEN: TColor = (R: 0;   G: 117; B: 44;  A: 255); // Dark Green
+  SKYBLUE:   TColor = (R: 102; G: 191; B: 255; A: 255); // Sky Blue
+  BLUE:      TColor = (R: 0;   G: 121; B: 241; A: 255); // Blue
+  DARKBLUE:  TColor = (R: 0;   G: 82;  B: 172; A: 255); // Dark Blue
+  PURPLE:    TColor = (R: 200; G: 122; B: 255; A: 255); // Purple
+  VIOLET:    TColor = (R: 135; G: 60;  B: 190; A: 255); // Violet
+  DARKPURPLE:TColor = (R: 112; G: 31;  B: 126; A: 255); // Dark Purple
+  BEIGE:     TColor = (R: 211; G: 176; B: 131; A: 255); // Beige
+  BROWN:     TColor = (R: 127; G: 106; B: 79;  A: 255); // Brown
+  DARKBROWN: TColor = (R: 76;  G: 63;  B: 47;  A: 255); // Dark beown
+  WHITE:     TColor = (R: 255; G: 255; B: 255; A: 255); // White
+  BLACK:     TColor = (R: 0;   G: 0;   B: 0;   A: 255); // Black
+  BLANK:     TColor = (R: 0;   G: 0;   B: 0;   A: 0  ); // Black(Transparent)
+  MAGENTA:   TColor = (R: 255; G: 0;   B: 255; A: 255); // Magenta
+  RAYWHITE:  TColor = (R: 245; G: 245; B: 245; A: 255); // raylib logo
 
 procedure InitWindow(width, height : integer; title: string);
 external;

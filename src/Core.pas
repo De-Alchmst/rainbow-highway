@@ -9,6 +9,9 @@ const
 
   TARGET_FPS = 60;
 
+  HIGHWAY_WIDTH = 150;
+  HIGHWAY_LENGTH = 2000;
+
 IMPLEMENTATION
 
 end.
