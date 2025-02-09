@@ -1,0 +1,14 @@
+unit Core;
+{$mode ObjFPC}{$H+}
+
+INTERFACE
+
+const
+  WINDOW_WIDTH = 800;
+  WINDOW_HEIGHT = 600;
+
+  TARGET_FPS = 60;
+
+IMPLEMENTATION
+
+end.
