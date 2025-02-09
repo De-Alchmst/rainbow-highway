@@ -27,4 +27,6 @@ begin
     EndDrawing;
 
   end;
+
+  CloseWindow;
 end.
