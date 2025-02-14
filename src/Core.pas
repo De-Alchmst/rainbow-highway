@@ -1,6 +1,11 @@
 unit Core;
 {$mode ObjFPC}{$H+}
 
+{
+  This unit is used for storing values used all over the place
+  Mostly constants tho
+}
+
 INTERFACE
 
 const
@@ -11,6 +16,8 @@ const
 
   HIGHWAY_WIDTH = 150;
   HIGHWAY_LENGTH = 2000;
+
+  CAMERA_Z = -150;
 
 IMPLEMENTATION
 
