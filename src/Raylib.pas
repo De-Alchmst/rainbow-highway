@@ -111,6 +111,9 @@ external;
 procedure DrawCube(centerPos: TVector3; width, height, length: cfloat;
                    color: TColor);
 external;
+procedure DrawCubeWires(centerPos: TVector3; width, height, length: cfloat;
+                   color: TColor);
+external;
 
 IMPLEMENTATION
 

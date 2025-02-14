@@ -3,7 +3,6 @@ unit Core;
 
 {
   This unit is used for storing values used all over the place
-  Mostly constants tho
 }
 
 INTERFACE
@@ -18,6 +17,9 @@ const
   HIGHWAY_LENGTH = 2000;
 
   CAMERA_Z = -150;
+
+var
+  RoadSpeed: integer = 2;
 
 IMPLEMENTATION
 

@@ -45,7 +45,6 @@ procedure UpdateHighwayLogic;
 IMPLEMENTATION
 
 var
-  RoadSpeed: integer = 2;
   StarSpeed: double = 1.8;
 
 
@@ -55,14 +54,12 @@ var
 
 begin
   for I := low(RoadParticles) to high(RoadParticles) do
-  begin
     with RoadParticles[I] do
     begin
       Y := -2;
       X := random(HIGHWAY_WIDTH) - HIGHWAY_WIDTH div 2;
       Z := -(random(HIGHWAY_LENGTH) - HIGHWAY_LENGTH div 2);
     end;
-  end;
 end;
 
 
@@ -72,7 +69,6 @@ var
 
 begin
   for I := low(Stars) to high(Stars) do
-  begin
     with Stars[I] do
     begin
       // choose side
@@ -85,7 +81,6 @@ begin
       Y := random(STARS_SPREAD_VERT) - STARS_SPREAD_VERT div 2
                                      - STARS_HOR_OFFSET;
     end;
-  end;
 end;
 
 
@@ -111,8 +106,6 @@ var
 
 begin
   for I := low(RoadParticles) to high(RoadParticles) do
-  begin
-
     with RoadParticles[I] do
     begin
       // no INC, because Z is float
@@ -120,7 +113,6 @@ begin
       if Z < -HIGHWAY_LENGTH div 2 then
         ResetRoadParticle(RoadParticles[I]);
     end;
-  end;
 end;
 
 
@@ -150,14 +142,12 @@ var
 begin
 
   for I := low(Stars) to high(Stars) do
-  begin
     with Stars[I] do
     begin
       Z := Z - StarSpeed;
       if Z < -HIGHWAY_LENGTH div 2 then
         ResetStar(Stars[I])
     end;
-  end;
 end;
 
 
@@ -170,6 +160,7 @@ end;
 
 INITIALIZATION
 
+  randomize;
   InitRoadParticles;
   InitStars;
 end.

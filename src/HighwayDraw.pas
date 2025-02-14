@@ -7,7 +7,7 @@ uses
   Raylib,
   Core,
   HighwayLogic,
-  Beams;
+  BeamsDraw;
 
 procedure DrawHighway;
 
@@ -93,13 +93,15 @@ end;
 
 
 procedure DrawRoadParticles;
+const
+  PARTICLE_SIZE: TVector2 = (X: real(RP_WIDTH); Y: real(RP_LENGTH));
+
 var
   ParticlePos: TVector3;
-  ParticleSize: TVector2 = (X: real(RP_WIDTH); Y: real(RP_LENGTH));
 
 begin
   for ParticlePos in RoadParticles do
-    DrawPlane(ParticlePos, ParticleSize, WHITE);
+    DrawPlane(ParticlePos, PARTICLE_SIZE, WHITE);
 end;
 
 
@@ -130,8 +132,9 @@ begin
 
   BeginMode3D(PlayerCamera);
 
-    DrawRoad;
     DrawStars;
+    DrawBeams;
+    DrawRoad;
 
   EndMode3D;
 end;
