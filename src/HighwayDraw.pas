@@ -29,8 +29,16 @@ const
   RP_LENGTH = 30;
   RP_COUNT = 3000;
 
+  STARS_COUNT = 1000;
+  STARS_SPREAD_HOR = 200;
+  STARS_HOR_OFFSET = 60;
+  STARS_SPREAD_VERT = 140;
+  // stars x highway gap
+  STARS_GAP = 70;
+  STAR_SIZE = 0.5;
+
 var
-  Speed: integer = 2;
+  Speed: integer = 10;
  
   BGColor: TColor;
   RoadLineColor: TColor;
@@ -50,6 +58,7 @@ var
   LinesMoved: integer = 0;
 
   RoadParticles: array[1..RP_COUNT] of TVector3;
+  Stars: array[1..STARS_COUNT] of TVector3;
 
 
 procedure InitColors;
@@ -76,8 +85,31 @@ begin
     with RoadParticles[I] do
     begin
       Y := -2;
-      X := random(HIGHWAY_WIDTH+1) - HIGHWAY_WIDTH div 2;
-      Z := -(random(HIGHWAY_LENGTH+1) - HIGHWAY_LENGTH div 2);
+      X := random(HIGHWAY_WIDTH) - HIGHWAY_WIDTH div 2;
+      Z := -(random(HIGHWAY_LENGTH) - HIGHWAY_LENGTH div 2);
+    end;
+  end;
+end;
+
+
+procedure InitStars;
+var
+  I: integer;
+
+begin
+  for I := low(Stars) to high(Stars) do
+  begin
+    with Stars[I] do
+    begin
+      // choose side
+      if random(2) = 0 then
+        X := random(STARS_SPREAD_HOR) + HIGHWAY_WIDTH div 2 + STARS_GAP
+      else
+        X := -random(STARS_SPREAD_HOR) - HIGHWAY_WIDTH div 2 - STARS_GAP;
+
+      Z := -(random(HIGHWAY_LENGTH) - HIGHWAY_LENGTH div 2);
+      Y := random(STARS_SPREAD_VERT) - STARS_SPREAD_VERT div 2
+                                     - STARS_HOR_OFFSET;
     end;
   end;
 end;
@@ -151,19 +183,17 @@ end;
 procedure MoveRoadParticles;
 var
   I: integer;
-  Particle: ^TVector3;
 
 begin
   for I := low(RoadParticles) to high(RoadParticles) do
   begin
-    Particle := @RoadParticles[I];
 
-    with Particle^ do
+    with RoadParticles[I] do
     begin
       // no INC, because Z is float
       Z := Z - Speed;
       if Z < -HIGHWAY_LENGTH div 2 then
-        ResetRoadParticle(Particle^);
+        ResetRoadParticle(RoadParticles[I]);
     end;
   end;
 end;
@@ -180,10 +210,58 @@ begin
 end;
 
 
+procedure ResetStar(var Star: TVector3);
+var
+  Offset: integer;
+
+begin
+  Offset := random(41) - 20;
+
+  with Star do
+  begin
+    Z := (HIGHWAY_LENGTH div 2) + Offset;
+    Y := random(STARS_SPREAD_VERT) - STARS_SPREAD_VERT div 2 - STARS_HOR_OFFSET;
+
+    if X > 0 then
+      X := random(STARS_SPREAD_HOR) + HIGHWAY_WIDTH div 2 + STARS_GAP
+    else
+      X := -random(STARS_SPREAD_HOR) - HIGHWAY_WIDTH div 2 - STARS_GAP;
+  end;
+end;
+
+
+procedure MoveStars;
+var
+  I: integer;
+begin
+
+  for I := low(Stars) to high(Stars) do
+  begin
+    with Stars[I] do
+    begin
+      Z := Z - Speed;
+      if Z < -HIGHWAY_LENGTH div 2 then
+        ResetStar(Stars[I])
+    end;
+  end;
+end;
+
+
+procedure DrawStars;
+var
+  StarPos: TVector3;
+
+begin
+  for StarPos in  Stars do
+    DrawSphere(StarPos, STAR_SIZE, WHITE);
+end;
+
+
 procedure Move;
 begin
   MoveLines;
   MoveRoadParticles;
+  MoveStars;
 end;
 
 
@@ -205,6 +283,7 @@ begin
   BeginMode3D(PlayerCamera);
 
     DrawRoad;
+    DrawStars;
 
   EndMode3D;
 end;
@@ -213,4 +292,5 @@ INITIALIZATION
 
   InitColors;
   InitRoadParticles;
+  InitStars;
 end.

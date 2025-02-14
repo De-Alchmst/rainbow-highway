@@ -24,6 +24,8 @@ begin
       
       DrawHighway;
 
+      DrawFPS(30, 30);
+
     EndDrawing;
 
   end;

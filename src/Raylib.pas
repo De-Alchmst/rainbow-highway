@@ -90,6 +90,9 @@ external;
 procedure EndDrawing;
 external;
 
+procedure DrawFPS(x, y : cint);
+external;
+
 procedure ClearBackground(color: TColor);
 external;
 
@@ -102,6 +105,8 @@ procedure EndMode3D;
 external;
 
 procedure DrawPlane(centerPos: TVector3; size: TVector2; color: TColor);
+external;
+procedure DrawSphere(centerPos: TVector3; radius: cfloat; color: TColor);
 external;
 
 IMPLEMENTATION
