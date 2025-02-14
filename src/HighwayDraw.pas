@@ -35,10 +35,11 @@ const
   STARS_SPREAD_VERT = 140;
   // stars x highway gap
   STARS_GAP = 70;
-  STAR_SIZE = 0.5;
+  STAR_SIZE = 0.8;
 
 var
-  Speed: integer = 10;
+  RoadSpeed: integer = 3;
+  StarSpeed: double = 1.8;
  
   BGColor: TColor;
   RoadLineColor: TColor;
@@ -117,7 +118,7 @@ end;
 
 procedure MoveLines;
 begin
-  LinesMoved := (LinesMoved + Speed) mod (LINE_LENGTH + LINE_GAP);
+  LinesMoved := (LinesMoved + RoadSpeed) mod (LINE_LENGTH + LINE_GAP);
 end; 
 
 
@@ -191,7 +192,7 @@ begin
     with RoadParticles[I] do
     begin
       // no INC, because Z is float
-      Z := Z - Speed;
+      Z := Z - RoadSpeed;
       if Z < -HIGHWAY_LENGTH div 2 then
         ResetRoadParticle(RoadParticles[I]);
     end;
@@ -239,7 +240,7 @@ begin
   begin
     with Stars[I] do
     begin
-      Z := Z - Speed;
+      Z := Z - StarSpeed;
       if Z < -HIGHWAY_LENGTH div 2 then
         ResetStar(Stars[I])
     end;
@@ -253,7 +254,7 @@ var
 
 begin
   for StarPos in  Stars do
-    DrawSphere(StarPos, STAR_SIZE, WHITE);
+    DrawCube(StarPos, STAR_SIZE, STAR_SIZE, STAR_SIZE, WHITE);
 end;
 
 

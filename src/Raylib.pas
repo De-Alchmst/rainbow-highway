@@ -108,6 +108,9 @@ procedure DrawPlane(centerPos: TVector3; size: TVector2; color: TColor);
 external;
 procedure DrawSphere(centerPos: TVector3; radius: cfloat; color: TColor);
 external;
+procedure DrawCube(centerPos: TVector3; width, height, length: cfloat;
+                   color: TColor);
+external;
 
 IMPLEMENTATION
 
