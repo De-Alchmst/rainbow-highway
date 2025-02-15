@@ -22,12 +22,13 @@ const
 }
   RP_WIDTH = 4;
   RP_LENGTH = 30;
-  RP_COUNT = 4000;
+  RP_COUNT = 1600;
 
-  STARS_COUNT = 1000;
+  STARS_LENGTH = 1000 - MAP_END;
+  STARS_COUNT = 700;
   STARS_SPREAD_HOR = 200;
-  STARS_HOR_OFFSET = 60;
-  STARS_SPREAD_VERT = 140;
+  STARS_VERT_OFFSET = 80;
+  STARS_SPREAD_VERT = 180;
   // stars x highway gap
   STARS_GAP = 70;
   STAR_SIZE = 0.8;
@@ -37,7 +38,7 @@ var
   RoadParticles: array[1..RP_COUNT] of TVector3;
   Stars: array[1..STARS_COUNT] of TVector3;
  
-  LinesMoved: integer = 0;
+  LinesMoved: double = 0;
 
 
 procedure UpdateHighwayLogic;
@@ -58,7 +59,7 @@ begin
     begin
       Y := -2;
       X := random(HIGHWAY_WIDTH) - HIGHWAY_WIDTH div 2;
-      Z := -(random(HIGHWAY_LENGTH) - HIGHWAY_LENGTH div 2);
+      Z := random(HIGHWAY_LENGTH) + MAP_END;
     end;
 end;
 
@@ -77,16 +78,18 @@ begin
       else
         X := -random(STARS_SPREAD_HOR) - HIGHWAY_WIDTH div 2 - STARS_GAP;
 
-      Z := -(random(HIGHWAY_LENGTH) - HIGHWAY_LENGTH div 2);
+      Z := random(STARS_LENGTH) + MAP_END;
       Y := random(STARS_SPREAD_VERT) - STARS_SPREAD_VERT div 2
-                                     - STARS_HOR_OFFSET;
+                                     - STARS_VERT_OFFSET;
     end;
 end;
 
 
 procedure MoveLines;
 begin
-  LinesMoved := (LinesMoved + RoadSpeed) mod (LINE_LENGTH + LINE_GAP);
+  LinesMoved := LinesMoved + RoadSpeed;
+  if LinesMoved > LINE_LENGTH + LINE_GAP then
+    LinesMoved := LinesMoved - (LINE_LENGTH + LINE_GAP);
 end; 
 
 
@@ -96,7 +99,7 @@ var
 
 begin
   Offset := random(41) - 20;
-  Particle.Z := (HIGHWAY_LENGTH div 2) + Offset;
+  Particle.Z := HIGHWAY_LENGTH + MAP_END + Offset;
 end;
 
 
@@ -110,7 +113,7 @@ begin
     begin
       // no INC, because Z is float
       Z := Z - RoadSpeed;
-      if Z < -HIGHWAY_LENGTH div 2 then
+      if Z < MAP_END then
         ResetRoadParticle(RoadParticles[I]);
     end;
 end;
@@ -125,8 +128,9 @@ begin
 
   with Star do
   begin
-    Z := (HIGHWAY_LENGTH div 2) + Offset;
-    Y := random(STARS_SPREAD_VERT) - STARS_SPREAD_VERT div 2 - STARS_HOR_OFFSET;
+    Z := STARS_LENGTH + MAP_END + Offset;
+    Y := random(STARS_SPREAD_VERT) - STARS_SPREAD_VERT div 2
+                                   - STARS_VERT_OFFSET;
 
     if X > 0 then
       X := random(STARS_SPREAD_HOR) + HIGHWAY_WIDTH div 2 + STARS_GAP
@@ -145,7 +149,7 @@ begin
     with Stars[I] do
     begin
       Z := Z - StarSpeed;
-      if Z < -HIGHWAY_LENGTH div 2 then
+      if Z < MAP_END then
         ResetStar(Stars[I])
     end;
 end;

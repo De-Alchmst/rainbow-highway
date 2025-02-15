@@ -8,9 +8,10 @@ uses
   Core;
 
 const
-  BEAMS_NUM = 30;
+  BEAMS_NUM = 18;
+  BEAMS_GAP = 60;
+  BEAMS_LENGTH = BEAMS_NUM * BEAMS_GAP;
   // beam x beam gap
-  BEAMS_GAP = HIGHWAY_LENGTH div BEAMS_NUM;
   MAX_BEAM_SIZE = 75;
   // beam x xhighway gap
   BEAM_OFFSET = 20;
@@ -46,18 +47,19 @@ begin
   begin
 
     // Move wave
-    repeat
-      Offset := random(MAX_BEAM_SIZE div 10) - MAX_BEAM_SIZE div 20;
-    until (Value + Offset > 0) and (Value + Offset <= MAX_BEAM_SIZE);
+    // repeat
+    //   Offset := random(MAX_BEAM_SIZE div 10) - MAX_BEAM_SIZE div 20;
+    // until (Value + Offset > 0) and (Value + Offset <= MAX_BEAM_SIZE);
 
-    inc(Value, Offset);
+    // inc(Value, Offset);
     // Value := MAX_BEAM_SIZE;
+    Value := random(MAX_BEAM_SIZE) + 1;
 
     // Alter beam
     with Beams[I] do
     begin
       Pos.Y := 0;
-      Pos.Z := I * BEAMS_GAP - HIGHWAY_LENGTH div 2;
+      Pos.Z := I * BEAMS_GAP + MAP_END;
       Size := Value;
     end;
   end;
@@ -74,8 +76,8 @@ begin
       begin
         Pos.Z := (Pos.Z - RoadSpeed);
 
-        if Pos.Z < -HIGHWAY_LENGTH div 2 then
-          Pos.Z := HIGHWAY_LENGTH div 2
+        if Pos.Z < MAP_END then
+          Pos.Z := BEAMS_LENGTH + MAP_END
       end
 end;
 

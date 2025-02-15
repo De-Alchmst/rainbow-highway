@@ -60,8 +60,7 @@ begin
 
     for J := 1 to LineCount do
     begin
-      LinePos.Z := - HIGHWAY_LENGTH div 2
-                   + J * (LINE_LENGTH + LINE_GAP) - LinesMoved;
+      LinePos.Z := MAP_END + J * (LINE_LENGTH + LINE_GAP) - LinesMoved;
       DrawPlane(LinePos, LineSize, RoadLineColor);
     end;
   end;
@@ -70,7 +69,7 @@ end;
 
 procedure DrawRoadForceField;
 var
-  FieldPos: TVector3 = (X: 0; Y: -1; Z: 0);
+  FieldPos: TVector3 = (X: 0; Y: -1; Z: HIGHWAY_LENGTH div 2 + MAP_END);
   FieldSize: TVector2 = (X: HIGHWAY_WIDTH; Y: HIGHWAY_LENGTH);
 
 begin
@@ -80,7 +79,7 @@ end;
 
 procedure DrawSideLines;
 var
-  LinePos: TVector3 = (X: 0; Y: 0; Z: 0);
+  LinePos: TVector3 = (X: 0; Y: 0; Z: HIGHWAY_LENGTH div 2 + MAP_END);
   LineSize: TVector2 = (X: 3; Y: HIGHWAY_LENGTH);
 
 begin

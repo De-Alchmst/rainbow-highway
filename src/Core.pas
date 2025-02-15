@@ -14,12 +14,13 @@ const
   TARGET_FPS = 60;
 
   HIGHWAY_WIDTH = 150;
-  HIGHWAY_LENGTH = 2000;
+  HIGHWAY_LENGTH = 800;
 
   CAMERA_Z = -150;
+  MAP_END = CAMERA_Z - 100;
 
 var
-  RoadSpeed: integer = 2;
+  RoadSpeed: double = 2;
 
 IMPLEMENTATION
 
