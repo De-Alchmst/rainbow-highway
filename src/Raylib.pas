@@ -35,7 +35,7 @@ type
   );
 
   TCamera3D = record
-    Position, target, Up : TVector3;
+    Position, Target, Up : TVector3;
     Fovy: cfloat;
     Projection: TCameraProjection;
   end;
@@ -47,6 +47,11 @@ type
     CAMERA_FIRST_PERSON,
     CAMERA_THIRD_PERSON
   );
+
+  TTexture2D = record
+    Id: cuint;
+    Width, Height, Mipmaps, Format: cint;
+  end;
 
 const
   LIGHTGRAY: TColor = (R: 200; G: 200; B: 200; A: 255); // Light Gray
@@ -113,6 +118,11 @@ procedure DrawCube(centerPos: TVector3; width, height, length: cfloat;
 external;
 procedure DrawCubeWires(centerPos: TVector3; width, height, length: cfloat;
                    color: TColor);
+external;
+
+function LoadTexture(fileName: string): TTexture2D;
+external;
+procedure UnloadTexture(texture: TTexture2D);
 external;
 
 IMPLEMENTATION

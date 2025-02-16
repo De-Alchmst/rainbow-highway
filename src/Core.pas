@@ -7,6 +7,9 @@ unit Core;
 
 INTERFACE
 
+uses 
+  sysutils;
+
 const
   WINDOW_WIDTH = 1024;
   WINDOW_HEIGHT = 768;
@@ -20,8 +23,13 @@ const
   MAP_END = CAMERA_Z - 100;
 
 var
-  RoadSpeed: double = 2;
+  RoadSpeed: double = 4;
+  DataDir: string;
 
 IMPLEMENTATION
+
+INITIALIZATION
+  // TODO: Search for data in various places
+  DataDir := ExtractFilePath(ParamStr(0)) + '../data/';
 
 end.

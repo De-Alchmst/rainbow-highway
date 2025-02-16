@@ -4,7 +4,8 @@ program Main;
 uses
   Raylib,
   Core,
-  HighwayLogic, HighwayDraw;
+  HighwayDraw,
+  GameDraw;
 
 procedure Initialize;
 begin
@@ -18,11 +19,10 @@ begin
   while not WindowShouldClose() do
   begin
 
-    UpdateHighwayLogic;
-
     BeginDrawing;
       
       DrawHighway;
+      DrawEntities;
 
       DrawFPS(30, 30);
 

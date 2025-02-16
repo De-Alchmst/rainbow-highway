@@ -46,7 +46,7 @@ procedure UpdateHighwayLogic;
 IMPLEMENTATION
 
 var
-  StarSpeed: double = 1.8;
+  StarSpeed: double = 3.6;
 
 
 procedure InitRoadParticles;

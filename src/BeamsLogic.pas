@@ -38,7 +38,7 @@ IMPLEMENTATION
 }
 procedure InitBeams;
 var
-  I, Offset, Value : integer;
+  I, Value : integer;
 
 begin
   Value := MAX_BEAM_SIZE div 2;
@@ -46,13 +46,7 @@ begin
   for I := low(Beams) to high(Beams) do
   begin
 
-    // Move wave
-    // repeat
-    //   Offset := random(MAX_BEAM_SIZE div 10) - MAX_BEAM_SIZE div 20;
-    // until (Value + Offset > 0) and (Value + Offset <= MAX_BEAM_SIZE);
-
-    // inc(Value, Offset);
-    // Value := MAX_BEAM_SIZE;
+    // For now just get random value
     Value := random(MAX_BEAM_SIZE) + 1;
 
     // Alter beam
