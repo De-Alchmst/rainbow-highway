@@ -35,8 +35,7 @@ begin
 
     BeginDrawing;
       
-      DrawHighway;
-      DrawEntities;
+      DrawGame;
 
       DrawFPS(30, 30);
 

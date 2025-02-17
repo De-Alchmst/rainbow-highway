@@ -17,17 +17,6 @@ var
   RoadLineColor: TColor;
   RoadFieldColor: TColor;
 
-  PlayerCamera: TCamera3D = (
-    Position: (X: 0;
-               // 2/3 of Z
-               Y: -(CAMERA_Z div 3) * 2;
-               Z: CAMERA_Z);
-    Target: (X: 0; Y: 0; Z: 0);
-    Up: (X: 0; Y: 1; Z: 0);
-    Fovy: 50.0;
-    Projection: CAMERA_PERSPECTIVE;
-  );
-
 
 procedure InitColors;
 begin
@@ -129,13 +118,9 @@ begin
 
   ClearBackground(BGColor);
 
-  BeginMode3D(PlayerCamera);
-
-    DrawStars;
-    DrawBeams;
-    DrawRoad;
-
-  EndMode3D;
+  DrawStars;
+  DrawBeams;
+  DrawRoad;
 end;
 
 INITIALIZATION

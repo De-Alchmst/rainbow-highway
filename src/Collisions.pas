@@ -28,14 +28,25 @@ type
     Width, Height, Length: real;
   end;
 
-  procedure DrawHitBox(box: THitBox; Color: TColor);
+procedure DrawHitBox(box: THitBox; Color: TColor);
 
 IMPLEMENTATION
 
 procedure DrawHitBox(Box: THitBox; Color: TColor);
+var
+  Center: TVector3;
 begin
   With Box do
-    DrawCubeWires(Origin, Width, Height, Length, Color);
+  begin
+    with Origin do
+    begin
+      Center.X := X - Width  / 2;
+      Center.Y := Y - Height / 2;
+      Center.Z := Z - Length / 2;
+    end;
+
+    DrawCubeWires(Center, Width, Height, Length, Color);
+  end;
 end;
   
 end.

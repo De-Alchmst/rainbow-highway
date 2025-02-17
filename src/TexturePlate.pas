@@ -10,7 +10,7 @@ uses
   Textures;
 
 const
-  DEF_SCALE = 0.5;
+  DEF_SCALE = 0.07;
 
 procedure DrawTexturePlate(Texture: TTexture2D; Position, Origin: TVector3;
                            rotX: integer = 0; rotY: integer = 0;
@@ -25,8 +25,8 @@ var
   Width, Height, Nx, Ny, Nz : real;
 
 begin
-  Width  := Texture.Width * Scale;
-  Height := Texture.Width * Scale;
+  Width  := Texture.Width  * Scale;
+  Height := Texture.Height * Scale;
 
   Nx := sin(deg2rad(RotX));
   Ny := sin(deg2rad(RotY + 90));
@@ -34,23 +34,23 @@ begin
 
   RlSetTexture(Texture.Id);
 
-  // Writeln(Texture.Id);
-
   RlBegin(RL_QUADS);
     RlColor4ub(255, 255, 255, 255);
 
     with Origin do
     begin
       RlNormal3f(Nx, Ny, Nz);
-      RlTexCoord2f(0, 0); RlVertex3f(X,         Y,          Z + Position.Z);
-      RlTexCoord2f(1, 0); RlVertex3f(X + Width, Y,          Z + Position.Z);
-      RlTexCoord2f(0, 1); RlVertex3f(X,         Y + Height, Z + Position.Z);
-      RlTexCoord2f(1, 1); RlVertex3f(X + Width, Y + Height, Z + Position.Z);
+
+      RlTexCoord2f(0, 1); RlVertex3f(X - Width, Y + Position.Y, Z - Height);
+      RlTexCoord2f(0, 0); RlVertex3f(X - Width, Y + Position.Y, Z);
+      RlTexCoord2f(1, 0); RlVertex3f(X,         Y + Position.Y, Z);
+      RlTexCoord2f(1, 1); RlVertex3f(X,         Y + Position.Y, Z - Height);
     end;
     
   RlEnd;
 
   RlSetTexture(0);
+
 end;
 
 INITIALIZATION

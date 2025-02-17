@@ -28,6 +28,9 @@ begin
   With HitBox do
   begin
     Origin := StartPos;
+    Width := 40;
+    Height := 30;
+    Length := 60;
   end;
 
   Bottom := GetTextureFromFile('lone-comrade-bottom');
@@ -37,9 +40,9 @@ end;
 
 procedure TPlayerShip.Draw;
 const
-  BOT_POS: TVector3 = (X: 0; Y: -10; Z: 0);
-  BAS_POS: TVector3 = (X: 0; Y: -5;  Z: 0);
-  TOP_POS: TVector3 = (X: 0; Y: 0;   Z: 0);
+  BOT_POS: TVector3 = (X: 0; Y: -4; Z: 0);
+  BAS_POS: TVector3 = (X: 0; Y: -2; Z: 0);
+  TOP_POS: TVector3 = (X: 0; Y: 0;  Z: 0);
 
 begin
   with HitBox do
