@@ -20,11 +20,12 @@ function  LoadDynamicTextureFromFile(FileName: string): TTexture2D;
 function  LoadStaticTextureFromFile(FileName: string): TTexture2D;
 procedure ClearDynamicTextures;
 
-function  TextureFromFileName(FileName: string): TTexture2D;
+function  GetTextureFromFile(FileName: string): TTexture2D;
 
-procedure RemoveTextureFileName(FileName: string);
+procedure RemoveTextureFile(FileName: string);
 procedure RemoveTextureID(Id: integer);
 
+procedure UnloadAllTextures;
   
 IMPLEMENTATION
 
@@ -35,14 +36,7 @@ var
   DynamicTextures, StaticTextures : TNameTextureMap;
 
 
-procedure LoadTextureFromFile(FileName: string; Textures: TNameTextureMap);
-begin
-  Textures.Add(FileName,
-               LoadTexture(DataDir + '/textures/' + FileName + '.png'));
-end;
-
-
-procedure UnloadAllTextures(Textures: TNameTextureMap);
+procedure UnloadAllFrom(Textures: TNameTextureMap);
 var
   I: integer;
 
@@ -52,9 +46,23 @@ begin
 end;
 
 
+procedure UnloadAllTextures;
+begin
+  UnloadAllFrom(DynamicTextures);
+  UnloadAllFrom(StaticTextures);
+end;
+
+
 procedure ClearDynamicTextures;
 begin
-  UnloadAllTextures(DynamicTextures);
+  UnloadAllFrom(DynamicTextures);
+end;
+
+
+procedure LoadTextureFromFile(FileName: string; Textures: TNameTextureMap);
+begin
+  Textures.Add(FileName,
+               LoadTexture(DataDir + 'textures/' + FileName + '.png'));
 end;
 
 
@@ -72,25 +80,31 @@ begin
 end;
 
 
-function TextureFromFileName(FileName: string): TTexture2D;
+function GetTextureFromFile(FileName: string): TTexture2D;
 var I: integer;
 begin
-  if DynamicTextures.Find(FileName, I) then
+  I := DynamicTextures.IndexOf(FileName);
+  if I <> -1 then
     Result := DynamicTextures.Data[I]
   else
     Result := StaticTextures.KeyData[FileName];
 end;
 
 
-procedure RemoveTextureFileName(FileName: string);
+procedure RemoveTextureFile(FileName: string);
 var
   I: integer;
 begin
-  if DynamicTextures.Find(FileName, I) then
+  I := DynamicTextures.IndexOf(FileName);
+  if I <> -1 then
     DynamicTextures.Remove(FileName)
 
-  else if StaticTextures.Find(FileName, I) then
+  else
+  begin
+    I := StaticTextures.IndexOf(FileName);
+    if I <> -1 then
     StaticTextures.Remove(FileName)
+  end;
 end;
 
 
@@ -125,8 +139,6 @@ INITIALIZATION
   StaticTextures := TNameTextureMap.Create;
 
 FINALIZATION
-  UnloadAllTextures(DynamicTextures);
-  UnloadAllTextures(StaticTextures);
   DynamicTextures.Free;
   StaticTextures.Free;
 

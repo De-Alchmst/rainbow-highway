@@ -8,6 +8,7 @@ uses
   Core,
   PlayerShip;
 
+procedure InitGame;
 procedure DrawEntities;
 
 IMPLEMENTATION
@@ -23,13 +24,15 @@ begin
   Player := TPlayerShip.Create(DEF_PLAYER_POS);
 end;
 
+procedure InitGame;
+begin
+  InitPlayer;
+end;
+
 procedure DrawEntities;
 begin
   Player.Draw;
 end;
-
-INITIALIZATION
-  InitPlayer;
 
 FINALIZATION
   Player.Free;

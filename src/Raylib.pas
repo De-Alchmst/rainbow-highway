@@ -53,6 +53,11 @@ type
     Width, Height, Mipmaps, Format: cint;
   end;
 
+  TImage = record
+    data: pcchar;
+    Width, Height, Mipmaps, Format: cint;
+  end;
+
 const
   LIGHTGRAY: TColor = (R: 200; G: 200; B: 200; A: 255); // Light Gray
   GRAY:      TColor = (R: 130; G: 130; B: 130; A: 255); // Gray
@@ -123,6 +128,13 @@ external;
 function LoadTexture(fileName: string): TTexture2D;
 external;
 procedure UnloadTexture(texture: TTexture2D);
+external;
+function LoadTextureFromImage(image: TImage): TTexture2D;
+external;
+
+function LoadImage(fileName: string): TImage;
+external;
+procedure UnloadImage(image: TImage);
 external;
 
 IMPLEMENTATION

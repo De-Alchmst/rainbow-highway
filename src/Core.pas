@@ -26,7 +26,17 @@ var
   RoadSpeed: double = 4;
   DataDir: string;
 
+function deg2rad(deg: real): real;
+
 IMPLEMENTATION
+
+function deg2rad(deg: real): real;
+const
+  TRANSFORM = PI/180;
+
+begin
+  Result := deg * TRANSFORM;
+end;
 
 INITIALIZATION
   // TODO: Search for data in various places

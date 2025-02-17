@@ -6,25 +6,21 @@ INTERFACE
 uses
   Core,
   Raylib,
+  Collisions,
   Textures;
 
 type
   TEntityBase = class
   public
     TextureList: TTextureNameList; static;
-    Pos: TVector3;
+    HitBox: THitBox;
 
-    constructor Create(StartPos: TVector3);
+    constructor Create(StartPos: TVector3); virtual; abstract;
 
     procedure Draw; virtual; abstract;
-    procedure Update(index: integer); virtual; abstract;
+    procedure Update(Index: integer); virtual; abstract;
   end;
 
 IMPLEMENTATION
-
-constructor TEntityBase.Create(StartPos: TVector3);
-begin
-  Pos := StartPos;
-end;
 
 end.
