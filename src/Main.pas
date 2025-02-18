@@ -6,7 +6,8 @@ uses
   Core,
   HighwayDraw,
   TexturesHandle,
-  GameDraw;
+  GameDraw,
+  GameLogic;
 
 procedure Initialize;
 begin
@@ -32,6 +33,8 @@ begin
 
   while not WindowShouldClose() do
   begin
+
+    UpdateGameLogic;
 
     BeginDrawing;
       

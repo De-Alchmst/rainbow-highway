@@ -22,6 +22,12 @@ const
   CAMERA_Z = -150;
   MAP_END = CAMERA_Z - 100;
 
+  PLAY_FIELD_BEGIN = CAMERA_Z + 50;
+  PLAY_FIELD_END = 200;
+  PLAY_FIELD_TOP = 55;
+  PLAY_FIELD_BOTTOM = 3;
+  PLAY_FIELD_PLAYER_END = 150;
+
 var
   RoadSpeed: double = 4;
   DataDir: string;

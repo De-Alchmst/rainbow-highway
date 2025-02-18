@@ -25,6 +25,9 @@ var
   Width, Height, Nx, Ny, Nz : real;
 
 begin
+  {
+    TODO: actually rotate stuff
+  }
   Width  := Texture.Width  * Scale;
   Height := Texture.Height * Scale;
 

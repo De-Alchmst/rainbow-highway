@@ -6,6 +6,7 @@ INTERFACE
 uses
   Raylib,
   Core,
+  GameLogic,
   HighwayDraw,
   PlayerShip,
   Collisions;
@@ -15,12 +16,7 @@ procedure DrawGame;
 
 IMPLEMENTATION
 
-const
-  DEF_PLAYER_POS: TVector3 = (X: 0; Y: 7; Z: CAMERA_Z + 130);
-
 var
-  Player: TPlayerShip;
-
   PlayerCamera: TCamera3D = (
     Position: (X: 0;
                // 2/3 of Z
@@ -33,14 +29,9 @@ var
   );
 
 
-procedure InitPlayer;
-begin
-  Player := TPlayerShip.Create(DEF_PLAYER_POS);
-end;
-
 procedure InitGame;
 begin
-  InitPlayer;
+  InitGameLogic;
 end;
 
 procedure DrawGame;
@@ -50,8 +41,8 @@ begin
 
     DrawHighway;
 
-    DrawHitBox(Player.HitBox, Lime);
-    DrawSphere(Player.HitBox.Origin, 3, RED);
+    // DrawHitBox(Player.HitBox, Lime);
+    // DrawSphere(Player.HitBox.Origin, 3, RED);
     Player.Draw;
 
   EndMode3D;
@@ -59,6 +50,5 @@ begin
 end;
 
 FINALIZATION
-  Player.Free;
 
 end.
