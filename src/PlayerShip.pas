@@ -28,9 +28,9 @@ begin
   With HitBox do
   begin
     Origin := StartPos;
-    Width := 40;
-    Height := 30;
-    Length := 60;
+    Width := 34;
+    Height := 10;
+    Length := 46;
   end;
 
   Bottom := GetTextureFromFile('lone-comrade-bottom');

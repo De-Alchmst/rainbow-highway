@@ -10,7 +10,7 @@ uses
   Textures;
 
 const
-  DEF_SCALE = 0.07;
+  DEF_SCALE = 1;
 
 procedure DrawTexturePlate(Texture: TTexture2D; Position, Origin: TVector3;
                            rotX: integer = 0; rotY: integer = 0;
@@ -39,12 +39,14 @@ begin
 
     with Origin do
     begin
+      // What does this even do?
       RlNormal3f(Nx, Ny, Nz);
 
-      RlTexCoord2f(0, 1); RlVertex3f(X - Width, Y + Position.Y, Z - Height);
-      RlTexCoord2f(0, 0); RlVertex3f(X - Width, Y + Position.Y, Z);
-      RlTexCoord2f(1, 0); RlVertex3f(X,         Y + Position.Y, Z);
-      RlTexCoord2f(1, 1); RlVertex3f(X,         Y + Position.Y, Z - Height);
+      // after a lot of trial and error:
+      RlTexCoord2f(0, 0); RlVertex3f(X,         Y + Position.Y, Z);
+      RlTexCoord2f(0, 1); RlVertex3f(X,         Y + Position.Y, Z - Height);
+      RlTexCoord2f(1, 1); RlVertex3f(X - Width, Y + Position.Y, Z - Height);
+      RlTexCoord2f(1, 0); RlVertex3f(X - Width, Y + Position.Y, Z);
     end;
     
   RlEnd;
