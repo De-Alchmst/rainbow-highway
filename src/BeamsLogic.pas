@@ -15,7 +15,7 @@ const
   BEAMS_START = MAP_END + 230;
   MAX_BEAM_SIZE = 75;
   // beam x highway gap
-  BEAM_OFFSET = 45;
+  BEAM_OFFSET = 35;
   BEAM_WIDTH = 8;
   BEAM_AURA = 4;
 
