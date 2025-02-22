@@ -21,7 +21,7 @@ begin
   with FullColor do
   begin
     case Size of
-      1..JUMP:
+      0..JUMP:
         begin
           R := 64;
           G := 59;

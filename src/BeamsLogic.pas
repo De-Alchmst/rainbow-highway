@@ -19,7 +19,7 @@ const
   BEAM_AURA = 4;
 
 type
-  TBeamSize = 1..MAX_BEAM_SIZE;
+  TBeamSize = 0..MAX_BEAM_SIZE;
 
   TBeam = record
     Pos : TVector3;
@@ -54,7 +54,7 @@ var
 procedure SamplesToMusicData(WaveSamples: TSamples; SampleRate: Cardinal);
 var
   I, SamplesPerBeam, SamplesDone, InsertIndex : integer;
-  Sum, Val, MinVal, MaxVal, Delta : real;
+  Val, LocalMax, MinVal, MaxVal, Delta : real;
   MovePerSecond, SecondsPerGap : real;
 
 begin
@@ -64,32 +64,32 @@ begin
 
   setLength(MusicData, length(WaveSamples) div SamplesPerBeam);
 
-  Sum := 0;
   SamplesDone := 0;
   InsertIndex := 0;
 
   MinVal := 1000;
   MaxVal := 0;
+  LocalMax := 0;
 
   // get averages, min and max values
   for I := 0 to length(WaveSamples)-1 do
   begin
-    // convert to 0..1 range
-    Sum := Sum + WaveSamples[I];
+    if WaveSamples[I] > LocalMax then
+      LocalMax := WaveSamples[I];
 
     inc(SamplesDone);
 
     if SamplesDone = SamplesPerBeam then
     begin
-      Val := Sum / SamplesPerBeam;
+      Val := LocalMax;
 
       if Val < MinVal then MinVal := Val;
       if Val > MaxVal then MaxVal := Val;
 
       MusicData[InsertIndex] := Val;
 
-      Sum := 0;
       SamplesDone := 0;
+      LocalMax := 0;
       inc(InsertIndex);
     end;
   end;
