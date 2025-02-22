@@ -12,9 +12,10 @@ const
   // beam x beam gap
   BEAMS_GAP = 60;
   BEAMS_LENGTH = BEAMS_NUM * BEAMS_GAP;
+  BEAMS_START = MAP_END + 230;
   MAX_BEAM_SIZE = 75;
   // beam x highway gap
-  BEAM_OFFSET = 20;
+  BEAM_OFFSET = 45;
   BEAM_WIDTH = 8;
   BEAM_AURA = 4;
 
@@ -154,7 +155,7 @@ begin
     with Beams[I] do
     begin
       Pos.Y := 0;
-      Pos.Z := I * BEAMS_GAP + MAP_END;
+      Pos.Z := BEAMS_START + I * BEAMS_GAP;
       Size := NextBeamSize;
     end;
   end;
@@ -171,9 +172,9 @@ begin
       begin
         Pos.Z := (Pos.Z - RoadSpeed);
 
-        if Pos.Z < MAP_END then
+        if Pos.Z < BEAMS_START then
         begin
-          Pos.Z := BEAMS_LENGTH + MAP_END;
+          Pos.Z := BEAMS_LENGTH + BEAMS_START;
           Size := NextBeamSize;
         end;
       end
