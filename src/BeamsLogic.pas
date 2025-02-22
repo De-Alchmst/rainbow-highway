@@ -54,7 +54,7 @@ var
 procedure SamplesToMusicData(WaveSamples: TSamples; SampleRate: Cardinal);
 var
   I, SamplesPerBeam, SamplesDone, InsertIndex : integer;
-  Val, LocalMax, MinVal, MaxVal, Delta : real;
+  Sum, Val, MinVal, MaxVal, Delta : real;
   MovePerSecond, SecondsPerGap : real;
 
 begin
@@ -64,32 +64,31 @@ begin
 
   setLength(MusicData, length(WaveSamples) div SamplesPerBeam);
 
+  Sum := 0;
   SamplesDone := 0;
   InsertIndex := 0;
 
   MinVal := 1000;
   MaxVal := 0;
-  LocalMax := 0;
 
   // get averages, min and max values
   for I := 0 to length(WaveSamples)-1 do
   begin
-    if WaveSamples[I] > LocalMax then
-      LocalMax := WaveSamples[I];
+    Sum := Sum + WaveSamples[I];
 
     inc(SamplesDone);
 
     if SamplesDone = SamplesPerBeam then
     begin
-      Val := LocalMax;
+      Val := (Sum / SamplesPerBeam);
 
       if Val < MinVal then MinVal := Val;
       if Val > MaxVal then MaxVal := Val;
 
       MusicData[InsertIndex] := Val;
 
+      Sum := 0;
       SamplesDone := 0;
-      LocalMax := 0;
       inc(InsertIndex);
     end;
   end;

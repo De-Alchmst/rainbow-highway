@@ -36,8 +36,8 @@ end;
 
 procedure StartGame;
 begin
-  LoadBeams('Marauder.mp3');
-  LoadMusic('Marauder.mp3');
+  LoadBeams('BigCarTheft.mp3');
+  LoadMusic('BigCarTheft.mp3');
 end;
 
 procedure UpdateGameLogic;
