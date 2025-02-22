@@ -39,27 +39,22 @@ type
   Psingle = ^single;
 
 var
-  MusicData: array of TBeamSize;
+  MusicData: array of single;
   MusicDataIndex: integer;
-
-
-procedure IncMusicDataIndex;
-begin
-  MusicDataIndex := (MusicDataIndex + 1) mod length(MusicData);
-end;
 
 
 {
   This procedure will take wave samples and fill MusicData with them
   Each beam data in MusicData is average of multiple samples
-  they are converted to fitting range based on min and max values
-  of the samples
+  First I get averages, min and max values. This is sotres in MusicData,
+  so that I don't have to make another array.
+  This is also why MusicData is not TBeamSize, but single
+  Then I normalise MusicData based on min and max values
 }
-procedure SamplesToMusicData(WaveSamples: TSamples; SampleRate: Cardinal;
-                             MaxValue, MinValue: single);
+procedure SamplesToMusicData(WaveSamples: TSamples; SampleRate: Cardinal);
 var
   I, SamplesPerBeam, SamplesDone, InsertIndex : integer;
-  Delta, Sum : single;
+  Sum, Val, MinVal, MaxVal, Delta : real;
   MovePerSecond, SecondsPerGap : real;
 
 begin
@@ -72,23 +67,38 @@ begin
   Sum := 0;
   SamplesDone := 0;
   InsertIndex := 0;
-  Delta := MaxValue - MinValue;
 
+  MinVal := 1000;
+  MaxVal := 0;
+
+  // get averages, min and max values
   for I := 0 to length(WaveSamples)-1 do
   begin
     // convert to 0..1 range
-    Sum := Sum + ((WaveSamples[I] - MinValue) / Delta);
+    Sum := Sum + WaveSamples[I];
 
     inc(SamplesDone);
+
     if SamplesDone = SamplesPerBeam then
     begin
-      MusicData[InsertIndex] := round(Sum / SamplesPerBeam * MAX_BEAM_SIZE);
+      Val := Sum / SamplesPerBeam;
+
+      if Val < MinVal then MinVal := Val;
+      if Val > MaxVal then MaxVal := Val;
+
+      MusicData[InsertIndex] := Val;
 
       Sum := 0;
       SamplesDone := 0;
       inc(InsertIndex);
     end;
   end;
+
+  Delta := MaxVal - MinVal;
+
+  // normalise
+  for I := 0 to length(MusicData)-1 do
+    MusicData[I] := (MusicData[I] - MinVal) / Delta;
 end;
 
 
@@ -96,7 +106,6 @@ procedure SetWaveData(FileName: string);
 var
   I: integer;
   Wave: TWave;
-  Val, MinValue, MaxValue : single;
   WaveSamples: TSamples;
   DataPtr: Psingle;
 
@@ -104,11 +113,7 @@ begin
   Wave := LoadWave(DataDir + 'music/' + FileName);
   with Wave do
   begin
-    MinValue := 10000000;
-    MaxValue := 0;
-
     setLength(WaveSamples, FrameCount);
-    writeln(FrameCount, ' ', Length(WaveSamples));
     DataPtr := Psingle(Data);
 
     // TODO: Support 16 and 8 bit waves
@@ -116,25 +121,24 @@ begin
     begin
       for I := 0 to FrameCount-1 do
       begin
-        Val := abs(DataPtr^);
-
-        if Val < MinValue then
-          MinValue := Val;
-        if Val > MaxValue then
-          MaxValue := Val;
-
-        WaveSamples[I] := Val;
+        WaveSamples[I] := abs(DataPtr^);
 
         inc(DataPtr, Channels);
       end;
     end;
-    writeln(FrameCount);
 
-    SamplesToMusicData(WaveSamples, SampleRate, MinValue, MaxValue);
+    SamplesToMusicData(WaveSamples, SampleRate);
   end;
 
   setLength(WaveSamples, 0);
   UnloadWave(Wave);
+end;
+
+
+function NextBeamSize: TBeamSize;
+begin
+  Result := round(MusicData[MusicDataIndex] * 6) * MAX_BEAM_SIZE div 6;
+  MusicDataIndex := (MusicDataIndex + 1) mod length(MusicData);
 end;
 
 
@@ -152,10 +156,8 @@ begin
     begin
       Pos.Y := 0;
       Pos.Z := I * BEAMS_GAP + MAP_END;
-      Size := MusicData[MusicDataIndex];
+      Size := NextBeamSize;
     end;
-
-    IncMusicDataIndex;
   end;
 end;
 
@@ -173,8 +175,7 @@ begin
         if Pos.Z < MAP_END then
         begin
           Pos.Z := BEAMS_LENGTH + MAP_END;
-          Size := MusicData[MusicDataIndex];
-          IncMusicDataIndex;
+          Size := NextBeamSize;
         end;
       end
 end;
