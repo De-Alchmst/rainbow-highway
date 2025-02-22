@@ -7,13 +7,15 @@ uses
   Raylib,
   Core,
   PlayerShip,
-  Collisions;
+  Collisions,
+  Audio;
 
 var
   Player: TPlayerShip;
 
 procedure InitGameLogic;
 procedure UpdateGameLogic;
+procedure StartGame;
 
 IMPLEMENTATION
 
@@ -29,6 +31,11 @@ end;
 procedure InitGameLogic;
 begin
   InitPlayer;
+end;
+
+procedure StartGame;
+begin
+  LoadMusic('Marauder.mp3');
 end;
 
 procedure UpdateGameLogic;

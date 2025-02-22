@@ -54,8 +54,26 @@ type
   end;
 
   TImage = record
-    data: pcchar;
+    data: pcsize_t;
     Width, Height, Mipmaps, Format: cint;
+  end;
+
+  TAudioStream = record
+    Buffer, Processor : pcsize_t;
+    SampleRate, SampleSize, Channels : cuint;
+  end;
+
+  TSound = record
+    Stream: TAudioStream;
+    FrameCount: cuint;
+  end;
+
+  TMusic = record
+    Stream: TAudioStream;
+    FrameCount: cuint;
+    Looping: cbool;
+    CtxType: cint;
+    CtxData: pcsize_t;
   end;
 
   TKeyboardKey = (
@@ -240,6 +258,23 @@ function GetCharPressed: cint;
 external;
 
 procedure SetExitKey(key: TKeyboardKey);
+external;
+
+procedure InitAudioDevice;
+external;
+procedure CloseAudioDevice;
+external;
+function LoadMusicStream(fileName: string): TMusic;
+external;
+procedure UnloadMusicStream(music: TMusic);
+external;
+procedure PlayMusicStream(music: TMusic);
+external;
+procedure UpdateMusicStream(music: TMusic);
+external;
+procedure StopMusicStream(music: TMusic);
+external;
+procedure ResumeMusicStream(music: TMusic);
 external;
 
 IMPLEMENTATION

@@ -7,11 +7,13 @@ uses
   HighwayDraw,
   TexturesHandle,
   GameDraw,
-  GameLogic;
+  GameLogic,
+  Audio;
 
 procedure Initialize;
 begin
   InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, 'Rainbow Highway!');
+  InitAudioDevice;
   SetTargetFPS(TARGET_FPS);
 
   // things that need to be done after InitWindow
@@ -25,16 +27,20 @@ begin
   // things that need to deinitialize before CloseWindow
   DeinitTextures;
 
-  CloseWindow;
+  CloseAudioDevice;
 end;
+
 
 begin
   Initialize;
+
+  StartGame;
 
   while not WindowShouldClose() do
   begin
 
     UpdateGameLogic;
+    UpdateAudio;
 
     BeginDrawing;
       
