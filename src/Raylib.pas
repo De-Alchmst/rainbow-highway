@@ -76,9 +76,15 @@ type
     CtxData: pcsize_t;
   end;
 
+  TWave = record
+    FrameCount, Samplerate, SampleSize, Channels : cuint;
+    Data: pcsize_t;
+  end;
+
   TKeyboardKey = (
     KEY_NULL            = 0,        // Key: NULL, used for no key pressed
-    // Alphanumeric keys
+
+    KEY_SPACE           = 32,       // Key: Space
     KEY_APOSTROPHE      = 39,       // Key: '
     KEY_COMMA           = 44,       // Key: ,
     KEY_MINUS           = 45,       // Key: -
@@ -126,8 +132,7 @@ type
     KEY_BACKSLASH       = 92,       // Key: '\'
     KEY_RIGHT_BRACKET   = 93,       // Key: ]
     KEY_GRAVE           = 96,       // Key: `
-    // Function keys
-    KEY_SPACE           = 32,       // Key: Space
+
     KEY_ESCAPE          = 256,      // Key: Esc
     KEY_ENTER           = 257,      // Key: Enter
     KEY_TAB             = 258,      // Key: Tab
@@ -159,7 +164,34 @@ type
     KEY_F10             = 299,      // Key: F10
     KEY_F11             = 300,      // Key: F11
     KEY_F12             = 301,      // Key: F12
-    KEY
+
+    KEY_KP_0            = 320,      // Key: Keypad 0
+    KEY_KP_1            = 321,      // Key: Keypad 1
+    KEY_KP_2            = 322,      // Key: Keypad 2
+    KEY_KP_3            = 323,      // Key: Keypad 3
+    KEY_KP_4            = 324,      // Key: Keypad 4
+    KEY_KP_5            = 325,      // Key: Keypad 5
+    KEY_KP_6            = 326,      // Key: Keypad 6
+    KEY_KP_7            = 327,      // Key: Keypad 7
+    KEY_KP_8            = 328,      // Key: Keypad 8
+    KEY_KP_9            = 329,      // Key: Keypad 9
+    KEY_KP_DECIMAL      = 330,      // Key: Keypad .
+    KEY_KP_DIVIDE       = 331,      // Key: Keypad /
+    KEY_KP_MULTIPLY     = 332,      // Key: Keypad *
+    KEY_KP_SUBTRACT     = 333,      // Key: Keypad -
+    KEY_KP_ADD          = 334,      // Key: Keypad +
+    KEY_KP_ENTER        = 335,      // Key: Keypad Enter
+    KEY_KP_EQUAL        = 336,      // Key: Keypad =
+    
+    KEY_LEFT_SHIFT      = 340,      // Key: Shift left
+    KEY_LEFT_CONTROL    = 341,      // Key: Control left
+    KEY_LEFT_ALT        = 342,      // Key: Alt left
+    KEY_LEFT_SUPER      = 343,      // Key: Super left
+    KEY_RIGHT_SHIFT     = 344,      // Key: Shift right
+    KEY_RIGHT_CONTROL   = 345,      // Key: Control right
+    KEY_RIGHT_ALT       = 346,      // Key: Alt right
+    KEY_RIGHT_SUPER     = 347,      // Key: Super right
+    KEY_KB_MENU         = 348       // Key: KB menu
   );
 
 const
@@ -275,6 +307,11 @@ external;
 procedure StopMusicStream(music: TMusic);
 external;
 procedure ResumeMusicStream(music: TMusic);
+external;
+
+function LoadWave(fileName: string): TWave;
+external;
+procedure UnloadWave(wave: TWave);
 external;
 
 IMPLEMENTATION

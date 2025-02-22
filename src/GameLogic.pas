@@ -8,7 +8,8 @@ uses
   Core,
   PlayerShip,
   Collisions,
-  Audio;
+  Audio,
+  BeamsLogic;
 
 var
   Player: TPlayerShip;
@@ -35,6 +36,7 @@ end;
 
 procedure StartGame;
 begin
+  LoadBeams('Marauder.mp3');
   LoadMusic('Marauder.mp3');
 end;
 
