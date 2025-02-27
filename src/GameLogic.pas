@@ -57,15 +57,36 @@ begin
 end;
 
 
-procedure UpdateGameLogic;
+procedure UpdatePlayerAttacks;
 var
   I: integer;
+  ToRemove: array of integer;
 
 begin
-  for I := 0 to length(PlayerAttacks)-1 do
-    PlayerAttacks[I].Update(I);
+  setLength(ToRemove, 0);
 
-  Player.Update(0);
+  for I := 0 to length(PlayerAttacks)-1 do
+  begin
+    PlayerAttacks[I].Update;
+
+    if not PlayerAttacks[I].IsAlive then
+      insert(I, ToRemove, 0);
+  end;
+
+  for I in ToRemove do
+  begin
+    PlayerAttacks[I].free;
+    delete(PlayerAttacks, I, 1);
+  end;
+end;
+
+
+procedure UpdateGameLogic;
+begin
+
+  UpdatePlayerAttacks;
+
+  Player.Update;
   Player.HandleAttacks(PlayerAttacks);
 end;
 

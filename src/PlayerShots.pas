@@ -22,7 +22,7 @@ type
   public
     constructor Create(StartPos: TVector3); override;
     procedure Draw; override;
-    procedure Update(Index: integer); override;
+    procedure Update; override;
   end;
 
 IMPLEMENTATION
@@ -38,6 +38,7 @@ begin
   end;
 
   Speed := 3;
+  IsAlive := true;
 
   Texture := GetTextureFromFile('basic-player-shot');
 end;
@@ -59,10 +60,15 @@ begin
 end;
 
 
-procedure TBasicPlayerShot.Update(Index: integer);
+procedure TBasicPlayerShot.Update;
 begin
   with HitBox, Origin do
+  begin
     Z := Z + Speed;
+
+    if Z > HIGHWAY_LENGTH then
+      IsAlive := false;
+  end;
 end;
 
 end.

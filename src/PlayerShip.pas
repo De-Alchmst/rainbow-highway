@@ -31,7 +31,7 @@ type
   public
     constructor Create(StartPos: TVector3); override;
     procedure Draw; override;
-    procedure Update(Index: integer); override;
+    procedure Update; override;
     procedure HandleAttacks(var entities: TEntities);
   end;
 
@@ -52,6 +52,7 @@ begin
   end;
 
   Speed := 2.5;
+  IsAlive := true;
 
   Bottom    := GetTextureFromFile('lone-comrade-bottom');
   MidBottom := GetTextureFromFile('lone-comrade-midbottom');
@@ -135,7 +136,7 @@ begin
 end;
 
 
-procedure TPlayerShip.Update(Index: integer);
+procedure TPlayerShip.Update;
 begin
   UpdateMovement;
 end;
