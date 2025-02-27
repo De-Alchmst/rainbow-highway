@@ -46,14 +46,15 @@ end;
 procedure TBasicPlayerShot.Draw;
 const
   HOR_POS: TVector3 = (X: 0; Y: -2; Z: 0);
-  VER_POS: TVector3 = (X: 2; Y: 0;  Z: 0);
+  RGT_POS: TVector3 = (X: 0; Y: 2;  Z: 0);
+  LFT_POS: TVector3 = (X: 4; Y: -2;  Z: 0);
 
 begin
   With HitBox do
   begin
     DrawTexturePlate(Texture, HOR_POS, Origin);
-    DrawTexturePlate(Texture, VER_POS, Origin, 0, 0, 90);
-    DrawTexturePlate(Texture, VER_POS, Origin, 0, 0, -90);
+    DrawTexturePlate(Texture, RGT_POS, Origin, 0, 0, 90);
+    DrawTexturePlate(Texture, LFT_POS, Origin, 0, 0, -90);
   end;
 end;
 
