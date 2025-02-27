@@ -9,6 +9,7 @@ uses
   GameLogic,
   HighwayDraw,
   PlayerShip,
+  EntityBase,
   Collisions;
 
 procedure InitGame;
@@ -35,6 +36,9 @@ begin
 end;
 
 procedure DrawGame;
+var
+  Ent: TEntityBase;
+
 begin
 
   BeginMode3D(PlayerCamera);
@@ -43,6 +47,9 @@ begin
 
     // DrawHitBox(Player.HitBox, Lime);
     // DrawSphere(Player.HitBox.Origin, 3, RED);
+    for Ent in PlayerAttacks do
+      Ent.Draw;
+
     Player.Draw;
 
   EndMode3D;

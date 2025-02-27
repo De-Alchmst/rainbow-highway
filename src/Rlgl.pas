@@ -5,12 +5,16 @@ INTERFACE
 
 {$linklib libraylib}
 
-uses ctypes;
+uses
+  ctypes,
+  Raylib;
 
 const
   RL_LINES     = $0001;
   RL_TRIANGLES = $0004;
   RL_QUADS     = $0007;
+
+procedure rlVertexVect3(vect: TVector3);
 
 procedure rlSetTexture(id: cuint);
 external;
@@ -29,4 +33,11 @@ procedure rlVertex3f(x, y, z : cfloat);
 external;
 
 IMPLEMENTATION
+
+procedure rlVertexVect3(vect: TVector3);
+begin
+  with Vect do
+    rlVertex3f(X, Y, Z);
+end;
+
 end.

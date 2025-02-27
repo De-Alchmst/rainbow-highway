@@ -8,13 +8,23 @@ uses
   Raylib,
   Textures,
   TexturePlate,
-  EntityBase;
+  EntityBase,
+  PlayerShots;
+
+const
+  PLAYER_SHIP_TEXTURE_LIST: TTextureNameList = (
+    'lone-comrade-bottom',
+    'lone-comrade-midbottom',
+    'lone-comrade-midtop',
+    'lone-comrade-top'
+  );
 
 type
   TPlayerShip = class(TEntityBase)
   private
     Bottom, MidBottom, MidTop, Top : TTexture2D;
     Speed: real;
+    BasicShotCooldown: integer;
     
     procedure UpdateMovement;
 
@@ -22,9 +32,14 @@ type
     constructor Create(StartPos: TVector3); override;
     procedure Draw; override;
     procedure Update(Index: integer); override;
+    procedure HandleAttacks(var entities: TEntities);
   end;
 
 IMPLEMENTATION
+
+const
+  BASIC_SHOT_COOLDOWN_MAX = 10;
+
 
 constructor TPlayerShip.Create(StartPos: TVector3);
 begin
@@ -42,6 +57,8 @@ begin
   MidBottom := GetTextureFromFile('lone-comrade-midbottom');
   MidTop    := GetTextureFromFile('lone-comrade-midtop');
   Top       := GetTextureFromFile('lone-comrade-top');
+
+  BasicShotCooldown := BASIC_SHOT_COOLDOWN_MAX;
 end;
 
 procedure TPlayerShip.Draw;
@@ -124,12 +141,31 @@ begin
 end;
 
 
-INITIALIZATION
-  TPlayerShip.TextureList := TTextureNameList.Create(
-    'lone-comrade-bottom',
-    'lone-comrade-midbottom',
-    'lone-comrade-midtop',
-    'lone-comrade-top'
-  );
+procedure TPlayerShip.HandleAttacks(var Entities: TEntities);
+var
+  Vect: TVector3;
+
+begin
+  if BasicShotCooldown > 0 then
+    dec(BasicShotCooldown)
+  else
+    if IsKeyDown(KEY_SPACE) then
+    begin
+      BasicShotCooldown := BASIC_SHOT_COOLDOWN_MAX;
+
+      with HitBox, Origin do
+      begin
+        Vect.Y := Y - 2;
+        Vect.Z := Z - 1;
+        
+        Vect.X := X - 4;
+        insert(TBasicPlayerShot.Create(Vect), Entities, 0);
+
+        Vect.X := X - 26;
+        insert(TBasicPlayerShot.Create(Vect), Entities, 0);
+      end;
+    end;
+
+end;
 
 end.

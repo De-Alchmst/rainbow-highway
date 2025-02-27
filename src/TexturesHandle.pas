@@ -7,7 +7,8 @@ uses
   Core,
   Raylib,
   Textures,
-  PlayerShip;
+  PlayerShip,
+  PlayerShots;
 
 procedure InitTextures;
 procedure DeinitTextures;
@@ -18,8 +19,10 @@ procedure LoadStaticTextures;
 var
   FileName: string;
 begin
-  for FileName in TPlayerShip.TextureList do
+  for FileName in PLAYER_SHIP_TEXTURE_LIST do
     LoadStaticTextureFromFile(FileName);
+
+  LoadStaticTextureFromFile(BASIC_PLAYER_SHOT_TEXTURE_LIST[0]);
 end;
 
 procedure InitTextures;

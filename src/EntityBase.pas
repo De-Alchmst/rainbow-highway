@@ -12,7 +12,6 @@ uses
 type
   TEntityBase = class
   public
-    TextureList: TTextureNameList; static;
     HitBox: THitBox;
 
     constructor Create(StartPos: TVector3); virtual; abstract;
@@ -20,6 +19,8 @@ type
     procedure Draw; virtual; abstract;
     procedure Update(Index: integer); virtual; abstract;
   end;
+
+  TEntities = array of TEntityBase;
 
 IMPLEMENTATION
 
