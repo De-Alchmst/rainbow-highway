@@ -14,6 +14,7 @@ uses
 
 procedure InitGame;
 procedure DrawGame;
+procedure DeinitGame;
 
 IMPLEMENTATION
 
@@ -29,10 +30,23 @@ var
     Projection: CAMERA_PERSPECTIVE;
   );
 
+  AplhaDiscard: TShader;
+
 
 procedure InitGame;
 begin
   InitGameLogic;
+
+  // I draw a bunch of transparent textures crossing each other
+  // This would make it near impossible to sort them in a 100% working order
+  // As I don't do anything crazy, alpha discard should not impact performance
+  // in any noticable way
+  AplhaDiscard := LoadShader('', SourceDir + 'AlphaDiscard.fs');
+end;
+
+procedure DeinitGame;
+begin
+  UnloadShader(AplhaDiscard);
 end;
 
 procedure DrawGame;
@@ -45,12 +59,18 @@ begin
 
     DrawHighway;
 
-    // DrawHitBox(Player.HitBox, Lime);
-    // DrawSphere(Player.HitBox.Origin, 3, RED);
-    for Ent in PlayerAttacks do
-      Ent.Draw;
+    // primitives don't work in the shader
+    // they are only drawn in white
+    // DrawHitBox(Player.HitBox, LIME);
+    // DrawSphere(Player.HitBox.Origin, 2, RED);
+    BeginShaderMode(AplhaDiscard);
 
-    Player.Draw;
+      for Ent in PlayerAttacks do
+        Ent.Draw;
+
+      Player.Draw;
+
+    EndShaderMode;
 
   EndMode3D;
 

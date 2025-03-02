@@ -81,6 +81,11 @@ type
     Data: pcsize_t;
   end;
 
+  TShader = record
+    Id: cuint;
+    locs: ^cint;
+  end;
+
   TKeyboardKey = (
     KEY_NULL            = 0,        // Key: NULL, used for no key pressed
 
@@ -312,6 +317,15 @@ external;
 function LoadWave(fileName: string): TWave;
 external;
 procedure UnloadWave(wave: TWave);
+external;
+
+function LoadShader(vsFileName, fsFileName : string): TShader;
+external;
+procedure UnloadShader(shader: TShader);
+external;
+procedure BeginShaderMode(shader: TShader);
+external;
+procedure EndShaderMode;
 external;
 
 IMPLEMENTATION

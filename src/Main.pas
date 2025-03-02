@@ -26,6 +26,7 @@ procedure Deinitialize;
 begin
   // things that need to deinitialize before CloseWindow
   DeinitTextures;
+  DeinitGame;
 
   CloseAudioDevice;
 end;

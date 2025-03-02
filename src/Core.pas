@@ -30,7 +30,7 @@ const
 
 var
   RoadSpeed: double = 4;
-  DataDir: string;
+  DataDir, SourceDir: string;
 
 function deg2rad(deg: real): real;
 
@@ -46,6 +46,7 @@ end;
 
 INITIALIZATION
   // TODO: Search for data in various places
-  DataDir := ExtractFilePath(ParamStr(0)) + '../data/';
+  SourceDir := ExtractFilePath(ParamStr(0));
+  DataDir := SourceDir + '../data/';
 
 end.
