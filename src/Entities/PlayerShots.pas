@@ -17,7 +17,6 @@ type
   TBasicPlayerShot = class(TEntityBase)
   private
     Texture: TTexture2D;
-    Speed: real;
 
   public
     constructor Create(StartPos: TVector3); override;

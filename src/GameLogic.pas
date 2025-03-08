@@ -1,4 +1,4 @@
-unit GameLogic;
+  unit GameLogic;
 {$mode ObjFPC}{$H+}
 
 INTERFACE
@@ -10,11 +10,13 @@ uses
   BeamsLogic,
   Collisions,
   PlayerShip,
-  EntityBase;
+  Droner, Glider,
+  EntityBase, EnemyBase;
 
 var
   Player: TPlayerShip;
-  PlayerAttacks: TEntities;
+  PlayerAttacks, EnemyAttacks: TEntities;
+  Enemies: TEnemies;
 
 procedure InitGameLogic;
 procedure UpdateGameLogic;
@@ -26,72 +28,55 @@ const
   DEF_PLAYER_POS: TVector3 = (X: -17; Y: 10; Z: CAMERA_Z + 130);
 
 
-procedure ResetPlayerAttacks;
-var
-  Ent: TEntityBase;
-
-begin
-  for Ent in PlayerAttacks do
-    Ent.Free;
-  setLength(PlayerAttacks, 0);
-end;
-
-
 procedure InitPlayer;
 begin
   Player := TPlayerShip.Create(DEF_PLAYER_POS);
 end;
 
 
+procedure ResetAllEntities;
+begin
+  ResetEntities(PlayerAttacks);
+  ResetEntities(EnemyAttacks);
+  ResetEnemies(Enemies);
+end;
+
+
 procedure InitGameLogic;
 begin
   InitPlayer;
-  ResetPlayerAttacks;
+  ResetAllEntities;
 end;
 
 
 procedure StartGame;
+const
+  DRONER_POS: TVector3 = (X: 0; Y: 14; Z: PLAY_FIELD_END - 150);
+  GLIDER_POS: TVector3 = (X: -40; Y: 14; Z: PLAY_FIELD_END - 150);
 begin
   LoadBeams('BigCarTheft.mp3');
   LoadMusic('BigCarTheft.mp3');
-end;
 
-
-procedure UpdatePlayerAttacks;
-var
-  I: integer;
-  ToRemove: array of integer;
-
-begin
-  setLength(ToRemove, 0);
-
-  for I := 0 to length(PlayerAttacks)-1 do
-  begin
-    PlayerAttacks[I].Update;
-
-    if not PlayerAttacks[I].IsAlive then
-      insert(I, ToRemove, 0);
-  end;
-
-  for I in ToRemove do
-  begin
-    PlayerAttacks[I].free;
-    delete(PlayerAttacks, I, 1);
-  end;
+  insert(TDroner.Create(DRONER_POS), Enemies, 0);
+  insert(TGlider.Create(GLIDER_POS), Enemies, 0);
 end;
 
 
 procedure UpdateGameLogic;
 begin
 
-  UpdatePlayerAttacks;
+  UpdateEntities(PlayerAttacks);
+  UpdateEntities(EnemyAttacks);
 
+  UpdateEnemies(Enemies);
   Player.Update;
+
   Player.HandleAttacks(PlayerAttacks);
+  AttackEnemies(Enemies, EnemyAttacks);
 end;
 
 FINALIZATION
   Player.Free;
-  ResetPlayerAttacks;
+  ResetAllEntities;
 end.
 

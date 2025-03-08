@@ -59,8 +59,8 @@ var
   MovePerSecond, SecondsPerGap : real;
 
 begin
-  MovePerSecond := TARGET_FPS * RoadSpeed;
-  SecondsPerGap := BEAMS_GAP / MovePerSecond;
+  MovePerSecond  := TARGET_FPS * RoadSpeed;
+  SecondsPerGap  := BEAMS_GAP / MovePerSecond;
   SamplesPerBeam := trunc(SecondsPerGap * SampleRate);
 
   setLength(MusicData, length(WaveSamples) div SamplesPerBeam);

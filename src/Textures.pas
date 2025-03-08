@@ -36,7 +36,7 @@ var
   DynamicTextures, StaticTextures : TNameTextureMap;
 
 
-procedure UnloadAllFrom(Textures: TNameTextureMap);
+procedure UnloadAllFromMap(Textures: TNameTextureMap);
 var
   I: integer;
 
@@ -48,14 +48,14 @@ end;
 
 procedure UnloadAllTextures;
 begin
-  UnloadAllFrom(DynamicTextures);
-  UnloadAllFrom(StaticTextures);
+  UnloadAllFromMap(DynamicTextures);
+  UnloadAllFromMap(StaticTextures);
 end;
 
 
 procedure ClearDynamicTextures;
 begin
-  UnloadAllFrom(DynamicTextures);
+  UnloadAllFromMap(DynamicTextures);
 end;
 
 

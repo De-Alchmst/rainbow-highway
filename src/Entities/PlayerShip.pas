@@ -23,7 +23,6 @@ type
   TPlayerShip = class(TEntityBase)
   private
     Bottom, MidBottom, MidTop, Top : TTexture2D;
-    Speed: real;
     BasicShotCooldown: integer;
     
     procedure UpdateMovement;
@@ -43,7 +42,7 @@ const
 
 constructor TPlayerShip.Create(StartPos: TVector3);
 begin
-  With HitBox do
+  with HitBox do
   begin
     Origin := StartPos;
     Width := 34;

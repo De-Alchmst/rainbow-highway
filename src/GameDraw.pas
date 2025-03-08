@@ -9,7 +9,7 @@ uses
   GameLogic,
   HighwayDraw,
   PlayerShip,
-  EntityBase,
+  EntityBase, EnemyBase,
   Collisions;
 
 procedure InitGame;
@@ -65,8 +65,9 @@ begin
     // DrawSphere(Player.HitBox.Origin, 2, RED);
     BeginShaderMode(AplhaDiscard);
 
-      for Ent in PlayerAttacks do
-        Ent.Draw;
+      DrawEntities(PlayerAttacks);
+      DrawEntities(EnemyAttacks);
+      DrawEnemies(Enemies);
 
       Player.Draw;
 
