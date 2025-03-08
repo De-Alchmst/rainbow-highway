@@ -8,7 +8,7 @@ uses
   Raylib,
   Textures,
   TexturePlate,
-  EntityBase, EnemyBase,
+  EntityBase, EnemyBase, AttackBase,
   ERShots;
 
 const
@@ -29,7 +29,7 @@ type
       constructor Create(StartPos: TVector3); override;
       procedure Draw; override;
       procedure Update; override;
-      procedure HandleAttacks(var entities: TEntities); override;
+      procedure HandleAttacks(var entities: TAttacks); override;
   end;
 
 IMPLEMENTATION
@@ -49,6 +49,7 @@ begin
   end;
 
   IsAlive := true;
+  Health := 20;
   ShootCooldown := SHOOT_COOLDOWN_MAX;
 
   Bottom := GetTextureFromFile('er/droner-bottom');
@@ -81,7 +82,7 @@ begin
   UpdateMovement;
 end;
 
-procedure TDroner.HandleAttacks(var Entities: TEntities);
+procedure TDroner.HandleAttacks(var Entities: TAttacks);
 var
   Vect: TVector3;
 
@@ -98,7 +99,7 @@ begin
       Vect.Z := Z - Length + 1;
       Vect.X := X - Width / 2 + 2;
 
-      insert(TBasicERShot.Create(Vect), Entities, 0);
+      insert(TBasicERShot.Create(Vect, 2, 4), Entities, 0);
     end;
   end;
 end;

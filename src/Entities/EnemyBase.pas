@@ -6,16 +6,20 @@ INTERFACE
 uses
   Core,
   Raylib,
-  EntityBase;
+  EntityBase, AttackBase;
 
 type
   TEnemyBase = class(TEntityBase)
-    procedure HandleAttacks(var Entities: TEntities); virtual; abstract;
+  public
+    Health: integer;
+
+    procedure TakeDamage(Damage: integer);
+    procedure HandleAttacks(var Entities: TAttacks); virtual; abstract;
   end;
 
   TEnemies = array of TEnemyBase;
 
-procedure AttackEnemies(Enemies: TEnemies; var Attacks: TEntities);
+procedure AttackEnemies(Enemies: TEnemies; var Attacks: TAttacks);
 
 procedure ResetEnemies(var Enemies: TEnemies);
 procedure UpdateEnemies(var Enemies: TEnemies);
@@ -23,7 +27,14 @@ procedure DrawEnemies(Enemies: TEnemies);
 
 IMPLEMENTATION
 
-procedure AttackEnemies(Enemies: TEnemies; var Attacks: TEntities);
+procedure TEnemyBase.TakeDamage(Damage: integer);
+begin
+  dec(Health, Damage);
+  if Health < 0 then IsAlive := false;
+end;
+
+
+procedure AttackEnemies(Enemies: TEnemies; var Attacks: TAttacks);
 var
   Enemy: TEnemyBase;
 
@@ -31,6 +42,7 @@ begin
   for Enemy in Enemies do
     Enemy.HandleAttacks(Attacks);
 end;
+
 
 procedure ResetEnemies(var Enemies: TEnemies);
 begin

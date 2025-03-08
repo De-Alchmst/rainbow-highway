@@ -1,4 +1,4 @@
-  unit GameLogic;
+unit GameLogic;
 {$mode ObjFPC}{$H+}
 
 INTERFACE
@@ -11,11 +11,11 @@ uses
   Collisions,
   PlayerShip,
   Droner, Glider,
-  EntityBase, EnemyBase;
+  EntityBase, EnemyBase, AttackBase;
 
 var
   Player: TPlayerShip;
-  PlayerAttacks, EnemyAttacks: TEntities;
+  PlayerAttacks, EnemyAttacks: TAttacks;
   Enemies: TEnemies;
 
 procedure InitGameLogic;
@@ -34,17 +34,24 @@ begin
 end;
 
 
+procedure ResetPlayer;
+begin
+  Player.free;
+  InitPlayer;
+end;
+
+
 procedure ResetAllEntities;
 begin
-  ResetEntities(PlayerAttacks);
-  ResetEntities(EnemyAttacks);
+  ResetPlayer;
+  ResetAttacks(PlayerAttacks);
+  ResetAttacks(EnemyAttacks);
   ResetEnemies(Enemies);
 end;
 
 
 procedure InitGameLogic;
 begin
-  InitPlayer;
   ResetAllEntities;
 end;
 
@@ -65,8 +72,8 @@ end;
 procedure UpdateGameLogic;
 begin
 
-  UpdateEntities(PlayerAttacks);
-  UpdateEntities(EnemyAttacks);
+  UpdateAttacks(PlayerAttacks);
+  UpdateAttacks(EnemyAttacks);
 
   UpdateEnemies(Enemies);
   Player.Update;

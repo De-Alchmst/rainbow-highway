@@ -8,7 +8,7 @@ uses
   Raylib,
   Textures,
   TexturePlate,
-  EntityBase,
+  EntityBase, AttackBase,
   PlayerShots;
 
 const
@@ -18,20 +18,15 @@ const
 type
   TBasicERShot = class(TBasicPlayerShot)
   public
-    procedure Update; override;
+    constructor Create(StartPos: TVector3; Sp: real; Dm: integer);
   end;
 
 IMPLEMENTATION
 
-procedure TBasicERShot.Update;
+constructor TBasicERShot.Create(StartPos: TVector3; Sp: real; Dm: integer);
 begin
-  with HitBox, Origin do
-  begin
-    Z := Z - Speed;
-
-    if Z < MAP_END then
-      IsAlive := false;
-  end;
+  inherited Create(StartPos, Sp, Dm);
+  Direction := Backwards;
 end;
 
 end.

@@ -8,7 +8,7 @@ uses
   Raylib,
   Textures,
   TexturePlate,
-  EntityBase,
+  EntityBase, AttackBase,
   PlayerShots;
 
 const
@@ -28,10 +28,12 @@ type
     procedure UpdateMovement;
 
   public
+    Health: integer;
+
     constructor Create(StartPos: TVector3); override;
     procedure Draw; override;
     procedure Update; override;
-    procedure HandleAttacks(var entities: TEntities);
+    procedure HandleAttacks(var entities: TAttacks);
   end;
 
 IMPLEMENTATION
@@ -141,7 +143,7 @@ begin
 end;
 
 
-procedure TPlayerShip.HandleAttacks(var Entities: TEntities);
+procedure TPlayerShip.HandleAttacks(var Entities: TAttacks);
 var
   Vect: TVector3;
 
@@ -159,10 +161,10 @@ begin
         Vect.Z := Z - 1;
         
         Vect.X := X - 4;
-        insert(TBasicPlayerShot.Create(Vect), Entities, 0);
+        insert(TBasicPlayerShot.Create(Vect, Speed+0.5, 10), Entities, 0);
 
         Vect.X := X - 26;
-        insert(TBasicPlayerShot.Create(Vect), Entities, 0);
+        insert(TBasicPlayerShot.Create(Vect, Speed+0.5, 10), Entities, 0);
       end;
     end;
 

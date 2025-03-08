@@ -8,7 +8,7 @@ uses
   Raylib,
   Textures,
   TexturePlate,
-  EntityBase, EnemyBase,
+  EntityBase, EnemyBase, AttackBase,
   ERShots;
 
 const
@@ -30,7 +30,7 @@ type
       constructor Create(StartPos: TVector3); override;
       procedure Draw; override;
       procedure Update; override;
-      procedure HandleAttacks(var entities: TEntities); override;
+      procedure HandleAttacks(var entities: TAttacks); override;
   end;
 
 IMPLEMENTATION
@@ -50,6 +50,7 @@ begin
   end;
 
   IsAlive := true;
+  Health := 40;
   ShootCooldown := SHOOT_COOLDOWN_MAX;
 
   Bottom := GetTextureFromFile('er/glider-bottom');
@@ -85,7 +86,7 @@ begin
   UpdateMovement;
 end;
 
-procedure TGlider.HandleAttacks(var Entities: TEntities);
+procedure TGlider.HandleAttacks(var Entities: TAttacks);
 var
   Vect: TVector3;
 
@@ -102,10 +103,10 @@ begin
       Vect.Z := Z - Length + 1;
 
       Vect.X := X - 3;
-      insert(TBasicERShot.Create(Vect), Entities, 0);
+      insert(TBasicERShot.Create(Vect, 3.2, 6), Entities, 0);
 
       Vect.X := X - 23;
-      insert(TBasicERShot.Create(Vect), Entities, 0);
+      insert(TBasicERShot.Create(Vect, 3.2, 6), Entities, 0);
 
     end;
   end;

@@ -8,26 +8,27 @@ uses
   Raylib,
   Textures,
   TexturePlate,
-  EntityBase;
+  EntityBase, AttackBase;
 
 const
   BASIC_PLAYER_SHOT_TEXTURE_LIST: TTextureNameList = ('basic-player-shot');
 
 type
-  TBasicPlayerShot = class(TEntityBase)
+  TBasicPlayerShot = class(TAttackBase)
   private
     Texture: TTexture2D;
 
   public
-    constructor Create(StartPos: TVector3); override;
+    constructor Create(StartPos: TVector3; Sp: real; Dm: integer);
     procedure Draw; override;
-    procedure Update; override;
   end;
 
 IMPLEMENTATION
 
-constructor TBasicPlayerShot.Create(StartPos: TVector3);
+constructor TBasicPlayerShot.Create(StartPos: TVector3; Sp: real; Dm: integer);
 begin
+  inherited Create(StartPos, Sp, Dm);
+
   With HitBox do
   begin
     Origin := StartPos;
@@ -36,9 +37,7 @@ begin
     Length := 7;
   end;
 
-  Speed := 3;
-  IsAlive := true;
-
+  Direction := Forwards;
   Texture := GetTextureFromFile('basic-player-shot');
 end;
 
@@ -55,18 +54,6 @@ begin
     DrawTexturePlate(Texture, HOR_POS, Origin);
     DrawTexturePlate(Texture, RGT_POS, Origin, 0, 0, 90);
     DrawTexturePlate(Texture, LFT_POS, Origin, 0, 0, -90);
-  end;
-end;
-
-
-procedure TBasicPlayerShot.Update;
-begin
-  with HitBox, Origin do
-  begin
-    Z := Z + Speed;
-
-    if Z > HIGHWAY_LENGTH then
-      IsAlive := false;
   end;
 end;
 
