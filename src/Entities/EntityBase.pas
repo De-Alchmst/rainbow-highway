@@ -6,6 +6,7 @@ INTERFACE
 uses
   Core,
   Raylib,
+  Debug,
   Collisions,
   Textures;
 
@@ -71,7 +72,12 @@ var
   
 begin
   for Ent in Entities do
-    Ent.Draw;
+    begin
+      Ent.Draw;
+
+      if IsDrawHitBox then
+        DrawHitBox(Ent.HitBox);
+    end;
 
 end;
 

@@ -46,7 +46,7 @@ begin
     Origin := StartPos;
     Width := 30;
     Length := 19;
-    Height := 4;
+    Height := 5;
   end;
 
   IsAlive := true;
@@ -61,7 +61,7 @@ end;
 
 procedure TGlider.Draw;
 const
-  BTM_POS: TVector3 = (X: 0; Y: -4; Z: 0);
+  BTM_POS: TVector3 = (X: 0; Y: -5; Z: 0);
   MID_POS: TVector3 = (X: 0; Y: -2; Z: 0);
   TOP_POS: TVector3 = (X: 0; Y: 0;  Z: 0);
 

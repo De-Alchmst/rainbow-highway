@@ -6,6 +6,7 @@ INTERFACE
 uses
   Raylib,
   Core,
+  Debug,
   GameLogic,
   HighwayDraw,
   PlayerShip,
@@ -56,10 +57,6 @@ begin
 
     DrawHighway;
 
-    // primitives don't work in the shader
-    // they are only drawn in white
-    // DrawHitBox(Player.HitBox, LIME);
-    // DrawSphere(Player.HitBox.Origin, 2, RED);
     BeginShaderMode(AplhaDiscard);
 
       DrawAttacks(PlayerAttacks);
@@ -67,6 +64,9 @@ begin
       DrawEnemies(Enemies);
 
       Player.Draw;
+
+      if IsDrawHitBox then
+        DrawHitBox(Player.HitBox);
 
     EndShaderMode;
 

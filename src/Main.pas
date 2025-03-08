@@ -4,6 +4,7 @@ program Main;
 uses
   Raylib,
   Core,
+  Debug,
   HighwayDraw,
   TexturesHandle,
   GameDraw,
@@ -39,6 +40,8 @@ begin
 
   while not WindowShouldClose() do
   begin
+
+    UpdateDebug;
 
     UpdateGameLogic;
     UpdateAudio;

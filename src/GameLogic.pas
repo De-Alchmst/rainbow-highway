@@ -80,6 +80,8 @@ begin
 
   Player.HandleAttacks(PlayerAttacks);
   AttackEnemies(Enemies, EnemyAttacks);
+
+  AttacksDealDamage(Enemies, PlayerAttacks);
 end;
 
 FINALIZATION
