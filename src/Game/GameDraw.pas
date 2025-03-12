@@ -42,7 +42,7 @@ begin
   // This would make it near impossible to sort them in a 100% working order
   // As I don't do anything crazy, alpha discard should not impact performance
   // in any noticable way
-  AplhaDiscard := LoadShader('', SourceDir + 'AlphaDiscard.fs');
+  AplhaDiscard := LoadShader('', SourceDir + 'Shaders/AlphaDiscard.fs');
 end;
 
 procedure DeinitGame;

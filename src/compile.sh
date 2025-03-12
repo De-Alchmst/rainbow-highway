@@ -1,3 +1,10 @@
 #!/bin/sh
 
-fpc -FuEntities Main.pas
+fpc  Main.pas \
+   -FuAudio \
+   -FuBindings \
+   -FuEntities \
+   -FuGame \
+   -FuTextures \
+   -FUCompiled
+
