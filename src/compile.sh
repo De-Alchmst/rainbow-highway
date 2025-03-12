@@ -1,10 +1,10 @@
 #!/bin/sh
 
-fpc  Main.pas \
-   -FuAudio \
-   -FuBindings \
-   -FuEntities \
-   -FuGame \
-   -FuTextures \
-   -FUCompiled
+command="fpc Main.pas -FUCompiled"
+
+for dir in $(ls -d */ | grep -o '[^/]*'); do
+   command="$command -Fu$dir"
+done
+
+eval $command
 
