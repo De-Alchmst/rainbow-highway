@@ -102,24 +102,8 @@ begin
         X := Width - HIGHWAY_WIDTH div 2;
     end;
 
-    // Forwards
-    if IsKeyDown(KEY_W) then
-    begin
-      Z := Z + Speed;
-      if Z > PLAY_FIELD_PLAYER_END then
-        Z := PLAY_FIELD_PLAYER_END;
-    end;
-
-    // Backwards
-    if IsKeyDown(KEY_S) then
-    begin
-      Z := Z - Speed;
-      if Z - Length < PLAY_FIELD_BEGIN then
-        Z := Length + PLAY_FIELD_BEGIN;
-    end;
-
     // Up
-    if IsKeyDown(KEY_Q) then
+    if IsKeyDown(KEY_W) then
     begin
       Y := Y + Speed;
       if Y > PLAY_FIELD_TOP then
@@ -127,7 +111,7 @@ begin
     end;
 
     // Down
-    if IsKeyDown(KEY_E) then
+    if IsKeyDown(KEY_S) then
     begin
       Y := Y - Speed;
       if Y - Height < PLAY_FIELD_BOTTOM then

@@ -25,7 +25,7 @@ procedure StartGame;
 IMPLEMENTATION
 
 const
-  DEF_PLAYER_POS: TVector3 = (X: -17; Y: 10; Z: CAMERA_Z + 130);
+  DEF_PLAYER_POS: TVector3 = (X: -17; Y: 10; Z: CAMERA_Z + 110);
 
 
 procedure InitPlayer;
