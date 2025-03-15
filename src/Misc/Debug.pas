@@ -7,6 +7,9 @@ uses
   Core,
   Raylib;
 
+const
+  SKIP_MENU = false;
+
 var
   IsDrawHitBox: boolean = false;
 

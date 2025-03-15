@@ -3,12 +3,12 @@ program Main;
 
 uses
   Raylib,
-  Core,
-  Debug,
+  Core, Debug,
+  GameStateHandle,
   HighwayDraw,
   TexturesHandle,
-  GameDraw,
-  GameLogic,
+  GameDraw, GameLogic,
+  MainMenuDraw, MainMenuLogic,
   Audio;
 
 procedure Initialize;
@@ -38,21 +38,41 @@ begin
 
   StartGame;
 
-  while not WindowShouldClose() do
+  while (not WindowShouldClose()) or (GameState = Exit) do
   begin
 
     UpdateDebug;
-
-    UpdateGameLogic;
     UpdateAudio;
 
-    BeginDrawing;
-      
-      DrawGame;
+    case GameState of
+      MainMenu:
+      begin
+        UpdateMainMenuLogic;
 
-      DrawFPS(30, 30);
+        BeginDrawing;
+          DrawMainMenu;
+        EndDrawing;
+      end;
 
-    EndDrawing;
+      Creddits:
+      begin
+      end;
+
+      Game:
+      begin
+        UpdateGameLogic;
+
+        BeginDrawing;
+          DrawGame;
+
+          DrawFPS(30, 30);
+        EndDrawing;
+      end;
+
+      else
+      begin
+      end;
+    end;
 
   end;
 end.

@@ -255,6 +255,16 @@ external;
 procedure EndMode3D;
 external;
 
+procedure DrawREctangleRect(rectangle: TRectangle; color: TColor);
+external;
+procedure DrawRectangleGradientEx(rectangle: TRectangle;
+                                  topLeft, bottomLeft, bottomRight,
+                                  topRight: TColor);
+external;
+procedure DrawRectangleLinesEx(rectangle: TRectangle; lineThick: cfloat;
+                               color: TColor);
+external;
+
 procedure DrawPlane(centerPos: TVector3; size: TVector2; color: TColor);
 external;
 procedure DrawSphere(centerPos: TVector3; radius: cfloat; color: TColor);
