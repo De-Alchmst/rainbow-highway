@@ -3,14 +3,16 @@ unit Raylib;
 
 INTERFACE
 
+{$PACKRECORDS C}
+
 {$ifdef STATIC}
 // static raylib does not include 'libc' and 'libm'
-{$linklib libc}
-{$linklib libm}
-{$linklib libraylib, static}
+{$linklib c}
+{$linklib m}
+{$linklib raylib, static}
 
 {$else}
-{$linklib libraylib}
+{$linklib raylib}
 {$endif}
 
 uses ctypes;
