@@ -9,7 +9,8 @@ uses
   TexturesHandle,
   GameDraw, GameLogic,
   MainMenuDraw, MainMenuLogic,
-  Audio;
+  Audio,
+  Loading;
 
 procedure Initialize;
 begin
@@ -32,15 +33,8 @@ begin
   CloseAudioDevice;
 end;
 
-
+procedure Update;
 begin
-  Initialize;
-
-  StartGame;
-
-  while (not WindowShouldClose()) or (GameState = Exit) do
-  begin
-
     UpdateDebug;
     UpdateAudio;
 
@@ -52,6 +46,18 @@ begin
         BeginDrawing;
           DrawMainMenu;
         EndDrawing;
+      end;
+
+      Wiki:
+      begin
+      end;
+
+      Manual:
+      begin
+      end;
+
+      Config:
+      begin
       end;
 
       Credits:
@@ -69,10 +75,45 @@ begin
         EndDrawing;
       end;
 
-      else
-      begin
-      end;
+      else begin end;
     end;
+end;
 
+procedure InitGameState;
+begin
+  case GameState of
+    MainMenu:
+      PlayMainMenuTheme;
+
+    Game:
+      begin
+        ShowLoadingScreen;
+        StartGame;
+      end;
+    else begin end;
+  end;
+end;
+
+var
+  PrevGameState: TGameState;
+
+begin
+  Initialize;
+
+  {$if SKIP_MAIN_MENU = true}
+    GameState := Game;
+    StartGame;
+  {$else}
+    PlayMainMenuTheme;
+  {$endif}
+
+  while (not WindowShouldClose()) and (GameState <> Exit) do
+  begin
+    PrevGameState := GameState;
+
+    Update;
+
+    if GameState <> PrevGameState then
+      InitGameState;
   end;
 end.

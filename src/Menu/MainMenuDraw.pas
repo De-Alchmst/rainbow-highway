@@ -38,7 +38,7 @@ begin
     DrawRectangleGradientEx(Rect, PINK, SKYBLUE, SKYBLUE, PINK);
     DrawMenuItemText(Item);
 
-    if IsSelected then DrawRectangleLinesEx(Rect, 4, VIOLET)
+    if IsSelected then DrawRectangleLinesEx(Rect, 4, DARKPURPLE)
     else               DrawRectangleLinesEx(Rect, 4, GRAY);
   end;
 end;

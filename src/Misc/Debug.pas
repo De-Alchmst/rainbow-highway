@@ -8,7 +8,7 @@ uses
   Raylib;
 
 const
-  SKIP_MENU = false;
+  SKIP_MAIN_MENU = false;
 
 var
   IsDrawHitBox: boolean = false;

@@ -6,7 +6,7 @@ uses
   Debug;
 
 type
-  TGameState = (MainMenu, Game, Credits, Wiki, Manual, Exit);
+  TGameState = (MainMenu, Game, Credits, Wiki, Manual, Config, Exit);
 
 var
   GameState: TGameState = MainMenu;

@@ -6,7 +6,8 @@ INTERFACE
 uses
   Raylib,
   Core,
-  GameStateHandle;
+  GameStateHandle,
+  Audio;
 
 type
   TMenuItem = record
@@ -20,6 +21,7 @@ var
   MenuItems: array of TMenuItem;
 
 procedure UpdateMainMenuLogic;
+procedure PlayMainMenuTheme;
 
 IMPLEMENTATION
 
@@ -38,6 +40,7 @@ const
     (Title: 'PLAY'; SetGameState: Game),
     (Title: 'WIKI'; SetGameState: Wiki),
     (Title: 'MANUAL'; SetGameState: Manual),
+    (Title: 'CONFIG'; SetGameState: Config),
     (Title: 'CREDITS'; SetGameState: Credits),
     (Title: 'EXIT'; SetGameState: Exit)
   );
@@ -79,6 +82,12 @@ begin
 end;
 
 
+procedure PlayMainMenuTheme;
+begin
+  LoadMusic('Marauder.mp3');
+end;
+
+
 function IsMouseMoved: boolean;
 var
   Vect: TVector2;
@@ -104,16 +113,16 @@ end;
 procedure HandleSelectionKeys;
 begin
   // DOWN
-  // if IsKeyPressed(KEY_S) or IsKeyPressed(KEY_DOWN) then
-  //   SelectedIndex := (SelectedIndex + 1) mod length(MenuItems);
+  if IsKeyPressed(KEY_S) or IsKeyPressed(KEY_DOWN) then
+    SelectedIndex := (SelectedIndex + 1) mod length(MenuItems);
 
-  // // UP
-  // if IsKeyPressed(KEY_W) or IsKeyPressed(KEY_UP) then
-  // begin
-  //   dec(SelectedIndex);
-  //   if SelectedIndex < 0 then
-  //     SelectedIndex := length(MenuItems)-1;
-  // end;
+  // UP
+  if IsKeyPressed(KEY_W) or IsKeyPressed(KEY_UP) then
+  begin
+    dec(SelectedIndex);
+    if SelectedIndex < 0 then
+      SelectedIndex := length(MenuItems)-1;
+  end;
 end;
 
 
@@ -147,7 +156,7 @@ end;
 
 procedure HandleActivation;
 begin
-  if IsKeyPressed(KEY_ENTER) or IsMouseButtonPressed(MOUSE_BUTTON_RIGHT) then
+  if IsKeyPressed(KEY_ENTER) or IsMouseButtonPressed(MOUSE_BUTTON_LEFT) then
     GameState := MenuItems[SelectedIndex].SetGameState;
 end;
 
