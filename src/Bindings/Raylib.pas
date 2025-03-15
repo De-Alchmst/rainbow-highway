@@ -199,6 +199,16 @@ type
     KEY_KB_MENU         = 348       // Key: KB menu
   );
 
+  TMouseButton = (
+    MOUSE_BUTTON_LEFT    = 0,       // Mouse button left
+    MOUSE_BUTTON_RIGHT   = 1,       // Mouse button right
+    MOUSE_BUTTON_MIDDLE  = 2,       // Mouse button middle (pressed wheel)
+    MOUSE_BUTTON_SIDE    = 3,       // Mouse button side (advanced mouse device)
+    MOUSE_BUTTON_EXTRA   = 4,       // Mouse button extra (advanced mouse device)
+    MOUSE_BUTTON_FORWARD = 5,       // Mouse button forward (advanced mouse device)
+    MOUSE_BUTTON_BACK    = 6        // Mouse button back (advanced mouse device)
+  );
+
 const
   LIGHTGRAY: TColor = (R: 200; G: 200; B: 200; A: 255); // Light Gray
   GRAY:      TColor = (R: 130; G: 130; B: 130; A: 255); // Gray
@@ -301,12 +311,33 @@ external;
 function IsKeyUp(key: TKeyboardKey): boolean;
 external;
 
+function IsMouseButtonPressed(button: TMouseButton): boolean;
+external;
+function IsMouseButtonDown(button: TMouseButton): boolean;
+external;
+function IsMouseButtonReleased(button: TMouseButton): boolean;
+external;
+function IsMouseButtonUp(button: TMouseButton): boolean;
+external;
+
+function GetMouseX: integer;
+external;
+function GetMouseY: integer;
+external;
+function GetMousePosition: TVector2;
+external;
+function GetMouseDelta: TVector2;
+external;
+
 function GetKeyPressed: TKeyboardKey;
 external;
 function GetCharPressed: cint;
 external;
 
 procedure SetExitKey(key: TKeyboardKey);
+external;
+
+function CheckCollisionPointRec(point: TVector2; rec: TRectangle): boolean;
 external;
 
 procedure InitAudioDevice;

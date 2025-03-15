@@ -54,7 +54,7 @@ begin
         EndDrawing;
       end;
 
-      Creddits:
+      Credits:
       begin
       end;
 

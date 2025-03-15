@@ -13,6 +13,7 @@ type
     Title: string;
     IsSelected: boolean;
     Rect: TRectangle;
+    SetGameState: TGameState;
   end;
 
 var
@@ -25,6 +26,7 @@ IMPLEMENTATION
 type
   TMenuItemPrototype = record
     Title: string;
+    SetGameState: TGameState;
   end;
 
 const
@@ -33,12 +35,16 @@ const
   MENU_ITEM_GAP = 20;
 
   MENU_ITEM_PROTOTYPES: array of TMenuItemPrototype = (
-    (Title: 'PLAY'),
-    (Title: 'WIKI'),
-    (Title: 'MANUAL'),
-    (Title: 'CREDITS'),
-    (Title: 'EXIT')
+    (Title: 'PLAY'; SetGameState: Game),
+    (Title: 'WIKI'; SetGameState: Wiki),
+    (Title: 'MANUAL'; SetGameState: Manual),
+    (Title: 'CREDITS'; SetGameState: Credits),
+    (Title: 'EXIT'; SetGameState: Exit)
   );
+
+var
+  SelectedIndex: integer = 0;
+
 
 procedure InitMenuItems;
 var
@@ -59,6 +65,7 @@ begin
     begin
 
       Title := MENU_ITEM_PROTOTYPES[I].Title;
+      SetGameState := MENU_ITEM_PROTOTYPES[I].SetGameState;
       IsSelected := false;
 
       with Rect do
@@ -72,13 +79,76 @@ begin
 end;
 
 
+function IsMouseMoved: boolean;
+var
+  Vect: TVector2;
+begin
+  Vect := GetMouseDelta;
+  Result := (Vect.X <> 0) and (Vect.Y <> 0);
+end;
+
+
+procedure SetSelection;
+var
+  I: integer;
+
+begin
+  for I := 0 to length(MenuItems)-1 do
+  if I = SelectedIndex then
+    MenuItems[I].IsSelected := true
+  else
+    MenuItems[I].IsSelected := false;
+end;
+
+
+procedure HandleSelectionKeys;
+begin
+  // DOWN
+  // if IsKeyPressed(KEY_S) or IsKeyPressed(KEY_DOWN) then
+  //   SelectedIndex := (SelectedIndex + 1) mod length(MenuItems);
+
+  // // UP
+  // if IsKeyPressed(KEY_W) or IsKeyPressed(KEY_UP) then
+  // begin
+  //   dec(SelectedIndex);
+  //   if SelectedIndex < 0 then
+  //     SelectedIndex := length(MenuItems)-1;
+  // end;
+end;
+
+
+procedure HandleSelectionMouse;
+var
+  I: integer;
+  MPos: TVector2;
+
+begin
+  if IsMouseMoved then
+  begin
+    MPos := GetMousePosition;
+
+    for I := 0 to length(MenuItems)-1 do
+      if CheckCollisionPointRec(MPos, MenuItems[I].Rect) then
+      begin
+        SelectedIndex := I;
+        break;
+      end;
+  end;
+end;
+
+
 procedure HandleSelection;
 begin
+  HandleSelectionKeys;
+  HandleSelectionMouse;
+  SetSelection;
 end;
 
 
 procedure HandleActivation;
 begin
+  if IsKeyPressed(KEY_ENTER) or IsMouseButtonPressed(MOUSE_BUTTON_RIGHT) then
+    GameState := MenuItems[SelectedIndex].SetGameState;
 end;
 
 
