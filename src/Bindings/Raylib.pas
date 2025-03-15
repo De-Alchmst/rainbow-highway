@@ -247,19 +247,21 @@ external;
 procedure ClearBackground(color: TColor);
 external;
 
-procedure DrawText(text: string; posX, posY, fontSize: integer; color: TColor);
-external;
-
 procedure BeginMode3D(camera: TCamera3D);
 external;
 procedure EndMode3D;
+external;
+
+procedure DrawText(text: string; posX, posY, fontSize : integer; color: TColor);
+external;
+function MeasureText(text: string; fontSize: integer): integer;
 external;
 
 procedure DrawREctangleRect(rectangle: TRectangle; color: TColor);
 external;
 procedure DrawRectangleGradientEx(rectangle: TRectangle;
                                   topLeft, bottomLeft, bottomRight,
-                                  topRight: TColor);
+                                  topRight : TColor);
 external;
 procedure DrawRectangleLinesEx(rectangle: TRectangle; lineThick: cfloat;
                                color: TColor);

@@ -28,21 +28,21 @@ type
   end;
 
 const
-  MENU_ITEM_WIDTH = 300;
-  MENU_ITEM_HEIGHT = 100;
-  MENU_ITEM_GAP = 50;
+  MENU_ITEM_WIDTH = 250;
+  MENU_ITEM_HEIGHT = 80;
+  MENU_ITEM_GAP = 20;
 
   MENU_ITEM_PROTOTYPES: array of TMenuItemPrototype = (
     (Title: 'PLAY'),
     (Title: 'WIKI'),
     (Title: 'MANUAL'),
-    (Title: 'CREDDITS'),
+    (Title: 'CREDITS'),
     (Title: 'EXIT')
   );
 
 procedure InitMenuItems;
 var
-  I, YStart: integer;
+  I, YStart : integer;
 
 const
   X_START = WINDOW_WIDTH div 2 - MENU_ITEM_WIDTH div 2;

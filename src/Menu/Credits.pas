@@ -1,4 +1,4 @@
-unit Creddits;
+unit Credits;
 {$mode ObjFPC}{$H+}
 
 INTERFACE
