@@ -93,7 +93,7 @@ var
   Vect: TVector2;
 begin
   Vect := GetMouseDelta;
-  Result := (Vect.X <> 0) and (Vect.Y <> 0);
+  Result := (Vect.X <> 0) or (Vect.Y <> 0);
 end;
 
 
