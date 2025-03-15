@@ -3,7 +3,15 @@ unit Raylib;
 
 INTERFACE
 
+{$ifdef STATIC}
+// static raylib does not include 'libc' and 'libm'
+{$linklib libc}
+{$linklib libm}
+{$linklib libraylib, static}
+
+{$else}
 {$linklib libraylib}
+{$endif}
 
 uses ctypes;
 

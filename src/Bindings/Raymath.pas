@@ -4,8 +4,6 @@ unit Raymath;
 
 INTERFACE
 
-{$linklib libraylib}
-
 uses
   ctypes,
   Raylib;

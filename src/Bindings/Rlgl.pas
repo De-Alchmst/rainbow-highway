@@ -3,8 +3,6 @@ unit Rlgl;
 
 INTERFACE
 
-{$linklib libraylib}
-
 uses
   ctypes,
   Raylib;
