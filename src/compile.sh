@@ -21,4 +21,3 @@ for dir in $(ls -d */ | grep -o '[^/]*'); do
 done
 
 eval $command
-

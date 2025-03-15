@@ -1,7 +1,25 @@
 unit Rlgl;
 {$mode ObjFPC}{$H+}
+{$MACRO ON}
 
 INTERFACE
+
+{$ifndef WINDOWS}
+  {$ifdef STATIC}
+    // static raylib does not include 'libc' and 'libm'
+    {$linklib c}
+    {$linklib m}
+    {$linklib raylib, static}
+    
+  {$else}
+    {$linklib raylib}
+  {$endif}
+  
+  {$define ext:=external}
+  
+{$else}
+  {$define ext:=cdecl; external 'raylib.dll'}
+{$endif}
 
 uses
   ctypes,
@@ -15,20 +33,20 @@ const
 procedure rlVertexVect3(vect: TVector3);
 
 procedure rlSetTexture(id: cuint);
-external;
+ext;
 procedure rlBegin(mode: cint);
-external;
+ext;
 procedure rlEnd();
-external;
+ext;
 procedure rlColor4ub(r, g, b, a : cuchar);
-external;
+ext;
 procedure rlNormal3f(x, y, z : cfloat);
-external;
+ext;
 
 procedure rlTexCoord2f(x, y : cfloat);
-external;
+ext;
 procedure rlVertex3f(x, y, z : cfloat);
-external;
+ext;
 
 IMPLEMENTATION
 

@@ -1,18 +1,26 @@
 unit Raylib;
 {$mode ObjFPC}{$H+}
+{$MACRO ON}
 
 INTERFACE
 
 {$PACKRECORDS C}
 
-{$ifdef STATIC}
-// static raylib does not include 'libc' and 'libm'
-{$linklib c}
-{$linklib m}
-{$linklib raylib, static}
-
+{$ifndef WINDOWS}
+  {$ifdef STATIC}
+    // static raylib does not include 'libc' and 'libm'
+    {$linklib c}
+    {$linklib m}
+    {$linklib raylib, static}
+    
+  {$else}
+    {$linklib raylib}
+  {$endif}
+  
+  {$define ext:=external}
+  
 {$else}
-{$linklib raylib}
+  {$define ext:=cdecl; external 'raylib.dll'}
 {$endif}
 
 uses ctypes;
@@ -248,138 +256,138 @@ const
   RAYWHITE:  TColor = (R: 245; G: 245; B: 245; A: 255); // raylib logo
 
 procedure InitWindow(width, height : integer; title: string);
-external;
+ext;
 procedure SetTargetFPS(fps: integer);
-external;
+ext;
 function WindowShouldClose: boolean;
-external;
+ext;
 procedure CloseWindow;
-external;
+ext;
 
 procedure BeginDrawing;
-external;
+ext;
 procedure EndDrawing;
-external;
+ext;
 
 procedure DrawFPS(x, y : cint);
-external;
+ext;
 
 procedure ClearBackground(color: TColor);
-external;
+ext;
 
 procedure BeginMode3D(camera: TCamera3D);
-external;
+ext;
 procedure EndMode3D;
-external;
+ext;
 
 procedure DrawText(text: string; posX, posY, fontSize : integer; color: TColor);
-external;
+ext;
 function MeasureText(text: string; fontSize: integer): integer;
-external;
+ext;
 
 procedure DrawREctangleRect(rectangle: TRectangle; color: TColor);
-external;
+ext;
 procedure DrawRectangleGradientEx(rectangle: TRectangle;
                                   topLeft, bottomLeft, bottomRight,
                                   topRight : TColor);
-external;
+ext;
 procedure DrawRectangleLinesEx(rectangle: TRectangle; lineThick: cfloat;
                                color: TColor);
-external;
+ext;
 
 procedure DrawPlane(centerPos: TVector3; size: TVector2; color: TColor);
-external;
+ext;
 procedure DrawSphere(centerPos: TVector3; radius: cfloat; color: TColor);
-external;
+ext;
 procedure DrawCube(centerPos: TVector3; width, height, length: cfloat;
                    color: TColor);
-external;
+ext;
 procedure DrawCubeWires(centerPos: TVector3; width, height, length: cfloat;
                    color: TColor);
-external;
+ext;
 
 function LoadTexture(fileName: string): TTexture2D;
-external;
+ext;
 procedure UnloadTexture(texture: TTexture2D);
-external;
+ext;
 function LoadTextureFromImage(image: TImage): TTexture2D;
-external;
+ext;
 
 function LoadImage(fileName: string): TImage;
-external;
+ext;
 procedure UnloadImage(image: TImage);
-external;
+ext;
 
 function IsKeyPressed(key: TKeyboardKey): boolean;
-external;
+ext;
 function IsKeyPressedRepeat(key: TKeyboardKey): boolean;
-external;
+ext;
 function IsKeyDown(key: TKeyboardKey): boolean;
-external;
+ext;
 function IsKeyReleased(key: TKeyboardKey): boolean;
-external;
+ext;
 function IsKeyUp(key: TKeyboardKey): boolean;
-external;
+ext;
 
 function IsMouseButtonPressed(button: TMouseButton): boolean;
-external;
+ext;
 function IsMouseButtonDown(button: TMouseButton): boolean;
-external;
+ext;
 function IsMouseButtonReleased(button: TMouseButton): boolean;
-external;
+ext;
 function IsMouseButtonUp(button: TMouseButton): boolean;
-external;
+ext;
 
 function GetMouseX: integer;
-external;
+ext;
 function GetMouseY: integer;
-external;
+ext;
 function GetMousePosition: TVector2;
-external;
+ext;
 function GetMouseDelta: TVector2;
-external;
+ext;
 
 function GetKeyPressed: TKeyboardKey;
-external;
+ext;
 function GetCharPressed: cint;
-external;
+ext;
 
 procedure SetExitKey(key: TKeyboardKey);
-external;
+ext;
 
 function CheckCollisionPointRec(point: TVector2; rec: TRectangle): boolean;
-external;
+ext;
 
 procedure InitAudioDevice;
-external;
+ext;
 procedure CloseAudioDevice;
-external;
+ext;
 function LoadMusicStream(fileName: string): TMusic;
-external;
+ext;
 procedure UnloadMusicStream(music: TMusic);
-external;
+ext;
 procedure PlayMusicStream(music: TMusic);
-external;
+ext;
 procedure UpdateMusicStream(music: TMusic);
-external;
+ext;
 procedure StopMusicStream(music: TMusic);
-external;
+ext;
 procedure ResumeMusicStream(music: TMusic);
-external;
+ext;
 
 function LoadWave(fileName: string): TWave;
-external;
+ext;
 procedure UnloadWave(wave: TWave);
-external;
+ext;
 
 function LoadShader(vsFileName, fsFileName : string): TShader;
-external;
+ext;
 procedure UnloadShader(shader: TShader);
-external;
+ext;
 procedure BeginShaderMode(shader: TShader);
-external;
+ext;
 procedure EndShaderMode;
-external;
+ext;
 
 IMPLEMENTATION
 
