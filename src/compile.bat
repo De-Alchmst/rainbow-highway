@@ -7,4 +7,5 @@ for /d %%D in (*) do (
     set command=!command! -Fu%%D
 )
 
+mkdir Compiled
 %command%
