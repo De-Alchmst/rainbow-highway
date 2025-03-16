@@ -20,5 +20,5 @@ for dir in $(ls -d */ | grep -o '[^/]*'); do
    command="$command -Fu$dir"
 done
 
-mkdir Compiled
+mkdir -p Compiled
 eval $command
