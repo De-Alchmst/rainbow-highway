@@ -11,30 +11,31 @@ uses
   EntityBox,
   BoxBase;
 
-procedure SetTextPageContent(Text: string);
-procedure UpdateTextPageLogic();
-procedure DrawTextPage();
+procedure SetTextPageContent(New: TTextPageContent);
+procedure UpdateTextPageLogic;
+procedure DrawTextPage;
 
 IMPLEMENTATION
 
-procedure SetTextPageContent(Text: string);
+var
+  PageContent: TTextPageContent;
+
+procedure SetTextPageContent(New: TTextPageContent);
 begin
+  PageContent := New;
 end;
 
 
-procedure UpdateTextPageLogic();
+procedure UpdateTextPageLogic;
 begin
+  PageContent.Update;
 end;
 
 
-procedure DrawTextPage();
-const
-  RECT: TRectangle = (X: 40; Y: 80; Width: 500; Height: 400);
-
+procedure DrawTextPage;
 begin
   ClearBackground(RAYWHITE);
-  DrawBoxInside(RECT, SKYBLUE);
-  DrawBoxOutline(RECT, BLACK);
+  PageContent.Draw;
 end;
 
 end.

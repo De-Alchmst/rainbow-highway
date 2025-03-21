@@ -5,20 +5,79 @@ INTERFACE
 
 uses
   Core,
-  Raylib;
+  Raylib,
+  BoxBase;
 
 type
   TTextBox = class
+    private
+      ContentText: string;
+      FgColor, BgColor, BdColor : TColor;
+      BdWidth: real;
+      TextSize: integer;
+
+      Rect: TRectangle;
+      Scroll: TPercent;
+      Image : TImage;
+      Texture: TTexture2D;
+
     public
-      constructor Create();
+      constructor Create(Text: string; X, Y, Width, Height : real;
+                         BackColor, ForeColor, BorderColor: TColor;
+                         FontSize: integer; BorderWidth: real = 7);
+      destructor Destroy; override;
+      procedure Update;
+      procedure Draw;
   end;
 
   TTextBoxes = array of TTextBox;
 
 IMPLEMENTATION
 
-constructor TTextBox.Create();
+constructor TTextBox.Create(Text: string; X, Y, Width, Height : real;
+                            BackColor, ForeColor, BorderColor: TColor;
+                            FontSize: integer; BorderWidth: real = 7);
 begin
+  Rect.X := X;
+  Rect.Y := Y;
+  Rect.Width := Width;
+  Rect.Height := Height;
+
+  ContentText := Text;
+  FgColor := ForeColor;
+  BgColor := BackColor;
+  BdColor := BorderColor;
+  BdWidth := BorderWidth;
+  TextSize := FontSize;
+
+  Scroll := 0;
+  Image := GenImageColor(trunc(Width), trunc(Height), BgColor);
+
+end;
+
+
+destructor TTextBox.Destroy;
+begin
+  UnloadImage(Image);
+  UnloadTexture(Texture);
+  inherited;
+end;
+
+
+procedure TTextBox.Update;
+begin
+  ImageClearBackground(@Image, BgColor);
+  ImageDrawText(@Image, ContentText, 10, 10, TextSize, FgColor);
+
+  UnloadTexture(Texture);
+  Texture := LoadTextureFromImage(Image);
+end;
+
+
+procedure TTextBox.Draw;
+begin
+  DrawTexture(Texture, trunc(Rect.X), trunc(Rect.Y), WHITE);
+  DrawBoxOutline(Rect, BdColor, BdWidth);
 end;
 
 end.

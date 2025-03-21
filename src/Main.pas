@@ -11,6 +11,7 @@ uses
   MainMenuDraw, MainMenuLogic,
   Audio,
   Loading,
+  WikiPage,
   TextPage;
 
 procedure Initialize;
@@ -51,6 +52,8 @@ begin
 
       Wiki:
       begin
+        UpdateTextPageLogic;
+
         BeginDrawing;
           DrawTextPage;
         EndDrawing;
@@ -93,6 +96,12 @@ begin
       begin
         ShowLoadingScreen;
         StartGame;
+      end;
+
+    Wiki:
+      begin
+        ShowLoadingScreen;
+        SetTextPageContent(GetWikiTextPageContent());
       end;
     else begin end;
   end;

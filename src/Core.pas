@@ -10,6 +10,9 @@ INTERFACE
 uses 
   sysutils;
 
+type 
+  TPercent = 0..100;
+
 const
   WINDOW_WIDTH = 1024;
   WINDOW_HEIGHT = 768;
@@ -32,16 +35,34 @@ var
   RoadSpeed: double = 4;
   DataDir, SourceDir: string;
 
-function deg2rad(deg: real): real;
+function Deg2rad(deg: real): real;
+function ReadFromFile(FileName: string): string;
 
 IMPLEMENTATION
 
-function deg2rad(deg: real): real;
+function Deg2rad(deg: real): real;
 const
   TRANSFORM = PI/180;
 
 begin
   Result := deg * TRANSFORM;
+end;
+
+function ReadFromFile(FileName: string): string;
+var
+  F: TextFile;
+  S: string;
+
+begin
+  assignFile(F, FileName);
+  reset(F);
+
+  Result := '';
+  while not eof(F) do
+  begin
+    readLn(F, S);
+    Result := Result + S;
+  end;
 end;
 
 INITIALIZATION

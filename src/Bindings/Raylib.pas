@@ -75,6 +75,7 @@ type
     data: pcsize_t;
     Width, Height, Mipmaps, Format: cint;
   end;
+  PImage = ^TImage;
 
   TAudioStream = record
     Buffer, Processor : pcsize_t;
@@ -274,6 +275,8 @@ ext;
 
 procedure ClearBackground(color: TColor);
 ext;
+procedure ImageClearBackground(dst: PImage; color: TColor);
+ext;
 
 procedure BeginMode3D(camera: TCamera3D);
 ext;
@@ -281,6 +284,9 @@ procedure EndMode3D;
 ext;
 
 procedure DrawText(text: string; posX, posY, fontSize : integer; color: TColor);
+ext;
+procedure ImageDrawText(dst: PImage; text: string;
+                        posX, posY, fontSize : integer; color: TColor);
 ext;
 function MeasureText(text: string; fontSize: integer): integer;
 ext;
@@ -312,14 +318,19 @@ procedure DrawCube(centerPos: TVector3; width, height, length: cfloat;
                    color: TColor);
 ext;
 procedure DrawCubeWires(centerPos: TVector3; width, height, length: cfloat;
-                   color: TColor);
+                        color: TColor);
 ext;
 
+function GenImageColor(width, height : integer; color: TColor): TImage;
+ext;
 function LoadTexture(fileName: string): TTexture2D;
 ext;
 procedure UnloadTexture(texture: TTexture2D);
 ext;
 function LoadTextureFromImage(image: TImage): TTexture2D;
+ext;
+
+procedure DrawTexture(texture: TTexture2D; posX, posY : integer; color: TColor);
 ext;
 
 function LoadImage(fileName: string): TImage;

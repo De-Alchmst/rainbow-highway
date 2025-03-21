@@ -7,13 +7,13 @@ uses
   Core,
   Raylib;
 
+const
+  BOX_CUT_WIDTH = 25;
+
 procedure DrawBoxOutline(Box: TRectangle; Color: TColor; Thick: real = 7);
 procedure DrawBoxInside(Box: TRectangle; Color: TColor);
 
 IMPLEMENTATION
-
-const
-  CUT_WIDTH = 25;
 
 
 procedure DrawBoxOutline(Box: TRectangle; Color: TColor; Thick: real = 7);
@@ -27,21 +27,21 @@ begin
   with Box do
   begin
     DrawLineExPoints(X - Off, Y,
-                     X + Width - CUT_WIDTH, Y,
+                     X + Width - BOX_CUT_WIDTH, Y,
                      Thick, Color);
-    DrawLineExPoints(X + Width - CUT_WIDTH - OffDiv, Y - OffDiv,
-                     X + Width + OffDiv, Y + CUT_WIDTH + OffDiv,
+    DrawLineExPoints(X + Width - BOX_CUT_WIDTH - OffDiv, Y - OffDiv,
+                     X + Width + OffDiv, Y + BOX_CUT_WIDTH + OffDiv,
                      Thick, Color);
-    DrawLineExPoints(X + Width, Y + CUT_WIDTH,
+    DrawLineExPoints(X + Width, Y + BOX_CUT_WIDTH,
                      X + Width, Y + Height + Off,
                      Thick, Color);
     DrawLineExPoints(X + Width, Y + Height,
-                     X + CUT_WIDTH, Y + Height,
+                     X + BOX_CUT_WIDTH, Y + Height,
                      Thick, Color);
-    DrawLineExPoints(X + CUT_WIDTH + OffDiv, Y + Height + OffDiv,
-                     X - OffDiv, Y + Height - CUT_WIDTH - OffDiv,
+    DrawLineExPoints(X + BOX_CUT_WIDTH + OffDiv, Y + Height + OffDiv,
+                     X - OffDiv, Y + Height - BOX_CUT_WIDTH - OffDiv,
                      Thick, Color);
-    DrawLineExPoints(X, Y + Height - CUT_WIDTH,
+    DrawLineExPoints(X, Y + Height - BOX_CUT_WIDTH,
                      X, Y,
                      Thick, Color);
   end;
@@ -55,26 +55,26 @@ var
 begin
   with Box do
   begin
-    DrawRectangleF(X, Y, Width - CUT_WIDTH, Height - CUT_WIDTH, Color);
-    DrawRectangleF(X + Width - CUT_WIDTH, Y + CUT_WIDTH,
-                   CUT_WIDTH, Height - CUT_WIDTH, Color);
-    DrawRectangleF(X + CUT_WIDTH, Y + Height - CUT_WIDTH,
-                   Width - CUT_WIDTH, CUT_WIDTH, Color);
+    DrawRectangleF(X, Y, Width - BOX_CUT_WIDTH, Height - BOX_CUT_WIDTH, Color);
+    DrawRectangleF(X + Width - BOX_CUT_WIDTH, Y + BOX_CUT_WIDTH,
+                   BOX_CUT_WIDTH, Height - BOX_CUT_WIDTH, Color);
+    DrawRectangleF(X + BOX_CUT_WIDTH, Y + Height - BOX_CUT_WIDTH,
+                   Width - BOX_CUT_WIDTH, BOX_CUT_WIDTH, Color);
 
-    VectA.X := X + Width - CUT_WIDTH;
+    VectA.X := X + Width - BOX_CUT_WIDTH;
     VectA.Y := Y;
-    VectB.X := X + Width - CUT_WIDTH;
-    VectB.Y := Y + CUT_WIDTH;
+    VectB.X := X + Width - BOX_CUT_WIDTH;
+    VectB.Y := Y + BOX_CUT_WIDTH;
     VectC.X := X + Width;
-    VectC.Y := Y + CUT_WIDTH;
+    VectC.Y := Y + BOX_CUT_WIDTH;
     DrawTriangle(VectA, VectB, VectC, Color);
 
-    VectA.X := X + CUT_WIDTH;
+    VectA.X := X + BOX_CUT_WIDTH;
     VectA.Y := Y + Height;
-    VectB.X := X + CUT_WIDTH;
-    VectB.Y := Y + Height - CUT_WIDTH;
+    VectB.X := X + BOX_CUT_WIDTH;
+    VectB.Y := Y + Height - BOX_CUT_WIDTH;
     VectC.X := X;
-    VectC.Y := Y + Height - CUT_WIDTH;
+    VectC.Y := Y + Height - BOX_CUT_WIDTH;
     DrawTriangle(VectA, VectB, VectC, Color);
   end;
 end;

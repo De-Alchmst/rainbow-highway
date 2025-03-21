@@ -13,15 +13,39 @@ type
   TTextPageContent = class
     public
       TextBoxes: TTextBoxes;
-      ImageBoxes: TEntityBoxes;
+      EntityBoxes: TEntityBoxes;
 
-      constructor Create();
+      constructor Create;
+      procedure Update;
+      procedure Draw;
   end;
 
 IMPLEMENTATION
 
-constructor TTextPageContent.Create();
+constructor TTextPageContent.Create;
 begin
+end;
+
+
+procedure TTextPageContent.Update;
+var
+  TextBox: TTextBox;
+  EntityBox: TEntityBox;
+
+begin
+  for TextBox in  TextBoxes do
+    TextBox.Update;
+end;
+
+
+procedure TTextPageContent.Draw;
+var
+  TextBox: TTextBox;
+  EntityBox: TEntityBox;
+
+begin
+  for TextBox in  TextBoxes do
+    TextBox.Draw;
 end;
 
 end.
