@@ -285,6 +285,13 @@ ext;
 function MeasureText(text: string; fontSize: integer): integer;
 ext;
 
+procedure DrawLineEx(startPos, endPos : TVector2; thick: cfloat; color: TColor);
+ext;
+procedure DrawLineExPoints(StartX, StartY, EndX, EndY : cfloat;
+                            thick: cfloat; color: TColor);
+procedure DrawRectangle(PosX, PosY, Width, Height : integer; color: TColor);
+ext;
+procedure DrawRectangleF(posX, posY, width, height : real; color: TColor);
 procedure DrawREctangleRect(rectangle: TRectangle; color: TColor);
 ext;
 procedure DrawRectangleGradientEx(rectangle: TRectangle;
@@ -293,6 +300,8 @@ procedure DrawRectangleGradientEx(rectangle: TRectangle;
 ext;
 procedure DrawRectangleLinesEx(rectangle: TRectangle; lineThick: cfloat;
                                color: TColor);
+ext;
+procedure DrawTriangle(v1, v2, v3 : TVector2; color: TColor);
 ext;
 
 procedure DrawPlane(centerPos: TVector3; size: TVector2; color: TColor);
@@ -390,5 +399,24 @@ procedure EndShaderMode;
 ext;
 
 IMPLEMENTATION
+
+procedure DrawLineExPoints(StartX, StartY, EndX, EndY : cfloat;
+                            thick: cfloat; color: TColor);
+var
+  StartV, EndV : TVector2;
+
+begin
+  StartV.X := StartX;
+  StartV.Y := StartY;
+  EndV.X := EndX;
+  EndV.Y := EndY;
+
+  DrawLineEx(StartV, EndV, thick, color);
+end;
+
+procedure DrawRectangleF(PosX, PosY, Width, Height : real; color: TColor);
+begin
+  DrawRectangle(trunc(PosX), trunc(PosY), trunc(Width), trunc(Height), color);
+end;
 
 end.

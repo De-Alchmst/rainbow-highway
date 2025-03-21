@@ -10,7 +10,8 @@ uses
   GameDraw, GameLogic,
   MainMenuDraw, MainMenuLogic,
   Audio,
-  Loading;
+  Loading,
+  TextPage;
 
 procedure Initialize;
 begin
@@ -50,6 +51,9 @@ begin
 
       Wiki:
       begin
+        BeginDrawing;
+          DrawTextPage;
+        EndDrawing;
       end;
 
       Manual:
