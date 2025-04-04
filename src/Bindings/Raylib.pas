@@ -31,13 +31,14 @@ type
     R, G, B, A : byte;
   end; 
 
-const TRANSPARENT_PURPLE: TColor = (R: 255; g: 0; B: 255; A:255);
+const TRANSPARENT_PURPLE : TColor = (R: 255; g: 0; B: 255; A:255);
 
 type
 
   TRectangle = record
     X, Y, Width, Height : cfloat;
   end;
+  PRectangle = ^TRectangle;
 
   TVector2 = record
     X, Y : cfloat;
@@ -107,6 +108,19 @@ type
   TShader = record
     Id: cuint;
     locs: ^cint;
+  end;
+
+  TGlyphInfo = record
+    Value, OffsetX, OffsetY, AdvanceX: cint;
+    Image: TImage;
+  end;
+  PGlyphInfo = ^TGlyphInfo;
+
+  TFont = record
+    BaseSize, GlyphCount, GlyphPadding : cint;
+    Texture: TTexture2D;
+    Rectangles: PRectangle;
+    Glyphs: PGlyphInfo;
   end;
 
   TKeyboardKey = (
@@ -287,10 +301,16 @@ ext;
 procedure EndMode3D;
 ext;
 
+function GetFontDefault: TFont;
+ext;
+
 procedure DrawText(text: string; posX, posY, fontSize : integer; color: TColor);
 ext;
 procedure ImageDrawText(dst: PImage; text: string;
                         posX, posY, fontSize : integer; color: TColor);
+ext;
+procedure ImageDrawTextEx(dst: PImage; font: TFont; text: string; pos: TVector2;
+                          fontSize, spacing : cfloat; tint: TColor);
 ext;
 function MeasureText(text: string; fontSize: integer): integer;
 ext;

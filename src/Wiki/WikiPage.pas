@@ -17,10 +17,12 @@ function GetWikiTextPageContent: TTextPageContent;
 begin
   Result := TTextPageContent.Create;
   insert(TTextBox.Create(
-    'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' + #10
+    + 'BBBBBBBBBBBBBBBBBBBB' + #10 +
+    'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
     400, 30, 500, 700,
     SKYBLUE, BLACK, BLACK,
-    20
+    GetFontDefault(), 23, 2, 4
     ), Result.TextBoxes, 0);
 end;
 
