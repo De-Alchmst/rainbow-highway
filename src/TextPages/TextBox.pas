@@ -32,7 +32,19 @@ type
 
   TTextBoxes = array of TTextBox;
 
+procedure InitTextBox;
+
 IMPLEMENTATION
+
+var
+  PurpleDiscard: TShader;
+
+
+procedure InitTextBox;
+begin
+  PurpleDiscard := LoadShader('', SourceDir + 'Shaders/PurpleDiscard.fs');
+end;
+
 
 constructor TTextBox.Create(Text: string; X, Y, Width, Height : real;
                             BackColor, ForeColor, BorderColor: TColor;
@@ -65,9 +77,12 @@ end;
 
 
 procedure TTextBox.Update;
+  
 begin
   ImageClearBackground(@Image, BgColor);
   ImageDrawText(@Image, ContentText, 10, 10, TextSize, FgColor);
+
+  TrimImageToBox(Image, Rect);
 
   UnloadTexture(Texture);
   Texture := LoadTextureFromImage(Image);
@@ -76,7 +91,12 @@ end;
 
 procedure TTextBox.Draw;
 begin
-  DrawTexture(Texture, trunc(Rect.X), trunc(Rect.Y), WHITE);
+  BeginShaderMode(PurpleDiscard);
+
+    DrawTexture(Texture, trunc(Rect.X), trunc(Rect.Y), WHITE);
+
+  EndShaderMode;
+
   DrawBoxOutline(Rect, BdColor, BdWidth);
 end;
 

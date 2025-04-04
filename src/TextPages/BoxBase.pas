@@ -12,6 +12,7 @@ const
 
 procedure DrawBoxOutline(Box: TRectangle; Color: TColor; Thick: real = 7);
 procedure DrawBoxInside(Box: TRectangle; Color: TColor);
+procedure TrimImageToBox(var Image: TImage; Box: TRectangle);
 
 IMPLEMENTATION
 
@@ -45,6 +46,32 @@ begin
                      X, Y,
                      Thick, Color);
   end;
+end;
+
+
+procedure TrimImageToBox(var Image: TImage; Box: TRectangle);
+var
+  v1, v2, v3 : TVector2;
+begin
+  // Top Right
+  v1.X := Box.Width - BOX_CUT_WIDTH;
+  v1.Y := 0;
+  v2.X := Box.Width;
+  v2.Y := 0;
+  v3.X := Box.Width;
+  v3.Y := BOX_CUT_WIDTH;
+
+  ImageDrawTriangle(@Image, v1, v2, v3, TRANSPARENT_PURPLE);
+
+  // Bottom Left
+  v1.X := 0;
+  v1.Y := Box.Height - BOX_CUT_WIDTH;
+  v2.X := BOX_CUT_WIDTH;
+  v2.Y := Box.Height;
+  v3.X := 0;
+  v3.Y := Box.Height;
+
+  ImageDrawTriangle(@Image, v1, v2, v3, TRANSPARENT_PURPLE);
 end;
 
 

@@ -11,6 +11,7 @@ uses
   EntityBox,
   BoxBase;
 
+procedure InitTextPages;
 procedure SetTextPageContent(New: TTextPageContent);
 procedure UpdateTextPageLogic;
 procedure DrawTextPage;
@@ -19,6 +20,11 @@ IMPLEMENTATION
 
 var
   PageContent: TTextPageContent;
+
+procedure InitTextPages;
+begin
+  InitTextBox;
+end;
 
 procedure SetTextPageContent(New: TTextPageContent);
 begin

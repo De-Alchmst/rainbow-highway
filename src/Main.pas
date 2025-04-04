@@ -23,6 +23,7 @@ begin
   // things that need to be done after InitWindow
   InitTextures;
   InitGame;
+  InitTextPages;
 end;
 
 

@@ -31,6 +31,10 @@ type
     R, G, B, A : byte;
   end; 
 
+const TRANSPARENT_PURPLE: TColor = (R: 255; g: 0; B: 255; A:255);
+
+type
+
   TRectangle = record
     X, Y, Width, Height : cfloat;
   end;
@@ -308,6 +312,8 @@ procedure DrawRectangleLinesEx(rectangle: TRectangle; lineThick: cfloat;
                                color: TColor);
 ext;
 procedure DrawTriangle(v1, v2, v3 : TVector2; color: TColor);
+ext;
+procedure ImageDrawTriangle(dst: PImage; v1, v2, v3 : TVector2; color: TColor);
 ext;
 
 procedure DrawPlane(centerPos: TVector3; size: TVector2; color: TColor);
